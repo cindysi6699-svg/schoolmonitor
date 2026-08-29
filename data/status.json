@@ -1,26 +1,71 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-08-29T15:35:23+08:00",
+  "updated_at": "2026-08-29T16:03:03+08:00",
   "counts": {
-    "open": 2,
-    "closed": 17,
-    "manual": 1
+    "open": 4,
+    "closed": 11,
+    "manual": 5
   },
   "schools": [
     {
-      "name": "優才（楊殷有娣）書院",
-      "district": "西貢區",
+      "name": "基督教崇真中學",
+      "district": "深水埗",
+      "band": "Band 1",
+      "gender": "男女",
+      "fee": "$42,500",
+      "curriculum": "DSE ＋ IAL",
+      "status": "open",
+      "source": "https://www.ttca.edu.hk/s1-admissions-2nd-round",
+      "home": "https://www.ttca.edu.hk/",
+      "evidence": "二零二七 + 中一 + 入學 — …2026 – 2027 is hk$43,500 (pending approval). 中一學費分十期繳費,二零二六/二零二七年度學費為hk$43,500﹙待審批﹚。 scholarships and bursaries are granted to diligent students and s…",
+      "last_open": "11-01",
+      "opened_at": "2026-08-29",
+      "pages_checked": 2
+    },
+    {
+      "name": "浸大附屬學校王錦輝中小學",
+      "district": "沙田區",
+      "band": "1C–1B",
+      "gender": "男女",
+      "fee": "$44,800",
+      "curriculum": "DSE ＋ IGCSE ＋ IAL",
+      "status": "open",
+      "source": "https://www.hkbuas.edu.hk/",
+      "home": "https://www.hkbuas.edu.hk/",
+      "evidence": "2027-2028 + S1 + admission — …admission (school year 2026-2027) g1 admission (school year 2027-2028) g7 admission (school year 2026-2027) scholarship & financial assistance scholar…",
+      "last_open": "11-08",
+      "opened_at": "2026-08-29",
+      "pages_checked": 1
+    },
+    {
+      "name": "保良局顏寶鈴書院",
+      "district": "九龍城",
       "band": "1B",
       "gender": "男女",
-      "fee": "$39,600",
+      "fee": "$35,200",
       "curriculum": "DSE ＋ IBDP",
       "status": "open",
-      "source": "https://www.gtcollege.edu.hk/",
-      "home": "https://www.gtcollege.edu.hk/",
-      "evidence": "",
-      "last_open": "09-22",
-      "opened_at": "2026-09-22",
-      "pages_checked": 3
+      "source": "https://www.npl.edu.hk/en/site/view?name=F.2-F.4+Admission",
+      "home": "https://www.npl.edu.hk/",
+      "evidence": "2027-2028 + F.1 + admission — …on » f.2-f.4 admission f.2-f.4 admission form 2-4 admission 2027-2028 will be open in coming may. details of form 2-4 admission application will be re…",
+      "last_open": "11-17",
+      "opened_at": "2026-08-29",
+      "pages_checked": 5
+    },
+    {
+      "name": "培僑書院",
+      "district": "沙田區",
+      "band": "1A",
+      "gender": "男女",
+      "fee": "$32,900",
+      "curriculum": "DSE",
+      "status": "open",
+      "source": "https://application.puikiucollege.edu.hk/event/all?cat_id=19&lang=zh",
+      "home": "https://www.puikiucollege.edu.hk/",
+      "evidence": "2027-2028 + 中一 + 入學 — …培僑書院入學申請系統 字型大小 a a a | eng 繁體 學校網頁 招生簡介會 入學申請 查詢申請狀態或 評估安排 2027-2028 小一入學申請 2026-2027 中一入學申請 2026-2027 插班生入學申請 2025-2026 插班生入學申請 入學申請 2027-2028 小一入學申…",
+      "last_open": "11-25",
+      "opened_at": "2026-08-29",
+      "pages_checked": 2
     },
     {
       "name": "拔萃女書院",
@@ -29,13 +74,88 @@
       "gender": "女校",
       "fee": "$42,000",
       "curriculum": "DSE ＋ IAL",
-      "status": "open",
+      "status": "manual",
       "source": "https://www.dgs.edu.hk/",
       "home": "https://www.dgs.edu.hk/",
-      "evidence": "",
+      "evidence": "首頁找不到招生連結（可能為 JS 導覽）",
       "last_open": "09-29",
       "opened_at": "2026-09-29",
-      "pages_checked": 3
+      "pages_checked": 1
+    },
+    {
+      "name": "德望學校",
+      "district": "黃大仙",
+      "band": "1A",
+      "gender": "女校",
+      "fee": "$36,750",
+      "curriculum": "DSE",
+      "status": "manual",
+      "source": "https://www.ghs.edu.hk/",
+      "home": "https://www.ghs.edu.hk/",
+      "evidence": "首頁找不到招生連結（可能為 JS 導覽）",
+      "last_open": "10-06",
+      "opened_at": null,
+      "pages_checked": 1
+    },
+    {
+      "name": "協恩中學",
+      "district": "九龍城",
+      "band": "1A",
+      "gender": "女校",
+      "fee": "$43,748",
+      "curriculum": "DSE",
+      "status": "manual",
+      "source": "https://www.hys.edu.hk/",
+      "home": "https://www.hys.edu.hk/",
+      "evidence": "首頁抓取失敗",
+      "last_open": "10-11",
+      "opened_at": null,
+      "pages_checked": 0
+    },
+    {
+      "name": "播道書院",
+      "district": "西貢區",
+      "band": "1B",
+      "gender": "男女",
+      "fee": "$30,300",
+      "curriculum": "DSE",
+      "status": "manual",
+      "source": "https://www.evangel.edu.hk/",
+      "home": "https://www.evangel.edu.hk/",
+      "evidence": "首頁找不到招生連結（可能為 JS 導覽）",
+      "last_open": "10-30",
+      "opened_at": null,
+      "pages_checked": 1
+    },
+    {
+      "name": "聖保祿學校",
+      "district": "灣仔區",
+      "band": "1A",
+      "gender": "女校",
+      "fee": "$30,000",
+      "curriculum": "DSE ＋ IGCSE ＋ IAL",
+      "status": "manual",
+      "source": "https://www.spcs.edu.hk/",
+      "home": "https://www.spcs.edu.hk/",
+      "evidence": "首頁找不到招生連結（可能為 JS 導覽）",
+      "last_open": "待確認",
+      "opened_at": null,
+      "pages_checked": 1
+    },
+    {
+      "name": "優才（楊殷有娣）書院",
+      "district": "西貢區",
+      "band": "1B",
+      "gender": "男女",
+      "fee": "$39,600",
+      "curriculum": "DSE ＋ IBDP",
+      "status": "closed",
+      "source": "https://www.gtcollege.edu.hk/",
+      "home": "https://www.gtcollege.edu.hk/",
+      "evidence": "",
+      "last_open": "09-22",
+      "opened_at": "2026-09-22",
+      "pages_checked": 4
     },
     {
       "name": "滙基書院（東九龍）",
@@ -44,13 +164,13 @@
       "gender": "男女",
       "fee": "$29,800",
       "curriculum": "DSE ＋ IGCSE ＋ IAL",
-      "status": "manual",
+      "status": "closed",
       "source": "https://www.uccke.edu.hk/",
       "home": "https://www.uccke.edu.hk/",
-      "evidence": "首頁找不到招生連結（可能為 JS 導覽）",
+      "evidence": "",
       "last_open": "09-29",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 4
     },
     {
       "name": "福建中學",
@@ -65,7 +185,7 @@
       "evidence": "",
       "last_open": "09-29",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 5
     },
     {
       "name": "保良局羅氏基金中學",
@@ -80,7 +200,7 @@
       "evidence": "",
       "last_open": "09-29",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 4
     },
     {
       "name": "聖士提反書院",
@@ -95,22 +215,7 @@
       "evidence": "",
       "last_open": "10-04",
       "opened_at": null,
-      "pages_checked": 3
-    },
-    {
-      "name": "德望學校",
-      "district": "黃大仙",
-      "band": "1A",
-      "gender": "女校",
-      "fee": "$36,750",
-      "curriculum": "DSE",
-      "status": "closed",
-      "source": "https://www.ghs.edu.hk/",
-      "home": "https://www.ghs.edu.hk/",
-      "evidence": "",
-      "last_open": "10-06",
-      "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 5
     },
     {
       "name": "中華基金中學",
@@ -125,22 +230,7 @@
       "evidence": "",
       "last_open": "10-06",
       "opened_at": null,
-      "pages_checked": 3
-    },
-    {
-      "name": "協恩中學",
-      "district": "九龍城",
-      "band": "1A",
-      "gender": "女校",
-      "fee": "$43,748",
-      "curriculum": "DSE",
-      "status": "closed",
-      "source": "https://www.hys.edu.hk/",
-      "home": "https://www.hys.edu.hk/",
-      "evidence": "",
-      "last_open": "10-11",
-      "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 4
     },
     {
       "name": "香港神託會培基書院",
@@ -155,7 +245,7 @@
       "evidence": "",
       "last_open": "10-20",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 2
     },
     {
       "name": "聖保羅男女中學",
@@ -165,27 +255,12 @@
       "fee": "$84,300",
       "curriculum": "DSE ＋ IBDP",
       "status": "closed",
-      "source": "https://www.spcc.edu.hk/chi/admissions/local-admissions/secondary/f1",
+      "source": "https://www.spcc.edu.hk/chi",
       "home": "https://www.spcc.edu.hk/chi",
       "evidence": "",
       "last_open": "10-27",
       "opened_at": null,
-      "pages_checked": 3
-    },
-    {
-      "name": "播道書院",
-      "district": "西貢區",
-      "band": "1B",
-      "gender": "男女",
-      "fee": "$30,300",
-      "curriculum": "DSE",
-      "status": "closed",
-      "source": "https://www.evangel.edu.hk/",
-      "home": "https://www.evangel.edu.hk/",
-      "evidence": "",
-      "last_open": "10-30",
-      "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 4
     },
     {
       "name": "香港青年協會李兆基書院",
@@ -203,21 +278,6 @@
       "pages_checked": 3
     },
     {
-      "name": "基督教崇真中學",
-      "district": "深水埗",
-      "band": "Band 1",
-      "gender": "男女",
-      "fee": "$42,500",
-      "curriculum": "DSE ＋ IAL",
-      "status": "closed",
-      "source": "https://www.ttca.edu.hk/",
-      "home": "https://www.ttca.edu.hk/",
-      "evidence": "",
-      "last_open": "11-01",
-      "opened_at": null,
-      "pages_checked": 3
-    },
-    {
       "name": "香港管理專業協會李國寶中學",
       "district": "油尖旺",
       "band": "1B",
@@ -230,22 +290,7 @@
       "evidence": "",
       "last_open": "11-02",
       "opened_at": null,
-      "pages_checked": 3
-    },
-    {
-      "name": "浸大附屬學校王錦輝中小學",
-      "district": "沙田區",
-      "band": "1C–1B",
-      "gender": "男女",
-      "fee": "$44,800",
-      "curriculum": "DSE ＋ IGCSE ＋ IAL",
-      "status": "closed",
-      "source": "https://www.hkbuas.edu.hk/",
-      "home": "https://www.hkbuas.edu.hk/",
-      "evidence": "",
-      "last_open": "11-08",
-      "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 5
     },
     {
       "name": "港大同學會書院",
@@ -260,52 +305,7 @@
       "evidence": "",
       "last_open": "11-12",
       "opened_at": null,
-      "pages_checked": 3
-    },
-    {
-      "name": "保良局顏寶鈴書院",
-      "district": "九龍城",
-      "band": "1B",
-      "gender": "男女",
-      "fee": "$35,200",
-      "curriculum": "DSE ＋ IBDP",
-      "status": "closed",
-      "source": "https://www.npl.edu.hk/",
-      "home": "https://www.npl.edu.hk/",
-      "evidence": "",
-      "last_open": "11-17",
-      "opened_at": null,
-      "pages_checked": 3
-    },
-    {
-      "name": "培僑書院",
-      "district": "沙田區",
-      "band": "1A",
-      "gender": "男女",
-      "fee": "$32,900",
-      "curriculum": "DSE",
-      "status": "closed",
-      "source": "https://application.puikiucollege.edu.hk/event/all?cat_id=19&lang=zh",
-      "home": "https://www.puikiucollege.edu.hk/",
-      "evidence": "",
-      "last_open": "11-25",
-      "opened_at": null,
-      "pages_checked": 3
-    },
-    {
-      "name": "聖保祿學校",
-      "district": "灣仔區",
-      "band": "1A",
-      "gender": "女校",
-      "fee": "$30,000",
-      "curriculum": "DSE ＋ IGCSE ＋ IAL",
-      "status": "closed",
-      "source": "https://www.spcs.edu.hk/",
-      "home": "https://www.spcs.edu.hk/",
-      "evidence": "",
-      "last_open": "待確認",
-      "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 5
     }
   ]
 }
