@@ -1,7 +1,8 @@
-# 監察對象：20 間直資中學（男女校及女校），2027/28 中一入學申請
+# 監察對象：19 間直資中學（男女校及女校），2027/28 中一入學申請
 #
-# name / home 為程式必需；其餘欄位僅供網頁顯示。
-# entry: 可選，指定招生頁後跳過自動發現。
+# name / home 為程式必需；其餘欄位供網頁顯示。
+# entry: 可選。已知招生頁時填上，程式會直接查該頁。
+#        沒有 entry 的學校，程式會檢查首頁並跟進首頁上的公告連結。
 # 學費為 2025/26 年度全年學費，僅供參考。
 
 schools:
@@ -62,6 +63,7 @@ schools:
   gender: 女校
   fee: $36,750
   curriculum: DSE
+  entry: https://www2.ghs.edu.hk/landing/admission
 - name: 中華基金中學
   home: https://www.cfss.edu.hk/
   band: 1B
@@ -95,14 +97,6 @@ schools:
   gender: 男女
   fee: $84,300
   curriculum: DSE ＋ IBDP
-- name: 播道書院
-  home: https://www.evangel.edu.hk/
-  band: 1B
-  last_open: 10-30
-  district: 西貢區
-  gender: 男女
-  fee: $30,300
-  curriculum: DSE
 - name: 香港青年協會李兆基書院
   home: https://www.hlc.edu.hk/
   band: 1C

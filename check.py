@@ -98,24 +98,31 @@ class Fetcher:
 # ---------------------------------------------------------------- discovery
 
 def score_link(href: str, text: str, cfg: dict) -> int:
+    """
+    公告標題本身就是最好的訊號。
+    「2027-2028年度中一入學申請」這種連結文字，比路徑裡有沒有
+    admission 可靠得多 —— 很多學校根本沒有獨立招生頁。
+    """
     blob = normalise(href + " " + text)
     if any(normalise(b) in blob for b in cfg["link_blocklist"]):
         return -1
+
     score = 0
+    if find_years(blob, cfg):
+        score += 5                      # 目標年份，最強
     if any(normalise(h) in blob for h in cfg["link_hints_strong"]):
-        score += 3
+        score += 3                      # 中一 / S1 / F1
     if any(normalise(h) in blob for h in cfg["link_hints_weak"]):
-        score += 2
-    # 目標年份直接出現在連結上，是最強訊號
-    if any(normalise(y) in blob for y in cfg["year_tokens"]):
-        score += 4
-    if blob.endswith(".pdf"):
+        score += 2                      # 入學 / 報名 / admission
+    if any(normalise(h) in blob for h in cfg.get("link_hints_news", [])):
+        score += 1                      # 最新消息 / 公告，值得順手看一眼
+    if blob.split("?")[0].endswith(".pdf"):
         score += 1
     return score
 
 
 def discover(soup: BeautifulSoup, base: str, cfg: dict, limit: int) -> list[str]:
-    """從一頁裡挑出最像招生頁的若干連結。"""
+    """從一頁裡挑出最值得跟進的站內連結。找不到就回空，不算失敗。"""
     home_domain = registrable(urlparse(base).netloc)
     scored: dict[str, int] = {}
 
@@ -149,91 +156,134 @@ class Verdict:
     candidates: list[str] = field(default_factory=list)
 
 
+def find_years(text: str, cfg: dict) -> list[tuple[int, int, str]]:
+    """回傳所有學年出現的位置 (start, end, 原文)。"""
+    out = []
+    for pat in cfg["year_patterns"]:
+        for m in re.finditer(pat, text, re.I):
+            out.append((m.start(), m.end(), m.group(0)))
+    return sorted(out)
+
+
+def nearest(haystack: str, lo: int, hi: int, ystart: int, yend: int,
+            tokens: list[str]) -> tuple[int, str] | None:
+    """在窗口內找離這個學年最近的 token，回傳 (距離, token)。"""
+    best = None
+    for t in tokens:
+        n = normalise(t)
+        if not n:
+            continue
+        pos = haystack.find(n, lo, hi)
+        while pos != -1:
+            if pos >= yend:
+                dist = pos - yend
+            elif pos + len(n) <= ystart:
+                dist = ystart - (pos + len(n))
+            else:
+                dist = 0
+            if best is None or dist < best[0]:
+                best = (dist, t)
+            pos = haystack.find(n, pos + 1, hi)
+    return best
+
+
 def judge_page(soup: BeautifulSoup, url: str, cfg: dict) -> tuple[bool, str]:
-    """一頁上同時見到年份 + 中一 + 招生，就算開放。"""
+    """
+    目標學年必須和「中一」貼在一起才算數。
+
+    兩個踩過的坑：
+    1. 三個訊號各自掃全頁 → 2026-27 招生頁只要頁尾有 2027 年的日期就誤報。
+    2. 窗口內見到「小一」就整段排除 → 但培僑把「2027-2028 小一入學申請」
+       和「2027-2028 中一入學申請」並排放，這樣會把真的開放也漏掉。
+
+    所以改成就近原則：看「中一」和「小一／插班」誰離這個學年更近，
+    近的那個說了算。
+    """
     text = normalise(soup.get_text(" ", strip=True))
 
-    # PDF 連結的檔名也算頁面內容的一部分
     pdf_names = " ".join(
         a["href"] for a in soup.find_all("a", href=True)
         if a["href"].lower().split("?")[0].endswith(".pdf")
     )
-    haystack = text + " " + normalise(pdf_names)
+    haystack = text + " || " + normalise(pdf_names)
 
-    year = any_token(haystack, cfg["year_tokens"])
-    if not year:
-        return False, ""
-    s1 = any_token(haystack, cfg["s1_tokens"])
-    if not s1:
-        return False, ""
-    adm = any_token(haystack, cfg["admission_tokens"])
-    if not adm:
-        return False, ""
+    win = cfg.get("proximity_chars", 40)
+    excl = cfg.get("exclude_near_year", [])
 
-    # 抓一段包含年份的上下文，方便你人工核對
-    idx = haystack.find(normalise(year))
-    snippet = haystack[max(0, idx - 60): idx + 90].strip()
-    return True, f"{year} + {s1} + {adm} — …{snippet}…"
+    for start, end, matched in find_years(haystack, cfg):
+        lo = max(0, start - win)
+        hi = min(len(haystack), end + win)
+
+        s1 = nearest(haystack, lo, hi, start, end, cfg["s1_tokens"])
+        if s1 is None:
+            continue
+
+        # 這個學年講的是小一／插班／校曆？看誰更貼近。
+        bad = nearest(haystack, lo, hi, start, end, excl)
+        if bad is not None and bad[0] < s1[0]:
+            continue
+
+        adm = nearest(haystack, lo, hi, start, end, cfg["admission_tokens"])
+        if adm is None:
+            continue
+
+        snippet = haystack[max(0, start - 55): end + 85].strip()
+        return True, f"{matched} + {s1[1]} + {adm[1]} — …{snippet}…"
+
+    return False, ""
 
 
 def check_school(school: dict, cfg: dict, fetcher: Fetcher,
                  cached: list[str] | None) -> Verdict:
-    name = school["name"]
-    print(f"  {name}")
+    """
+    以首頁為核心：大部分學校沒有獨立招生頁，公告直接掛在首頁。
+    先驗起始頁，再順著頁面上帶年份／中一字樣的連結往下看一層。
 
-    # 候選頁：明確指定 > 快取 > 現場發現
-    if school.get("entry"):
-        candidates = [school["entry"]]
-        home_soup = None
-    elif cached:
-        candidates = list(cached)
-        home_soup = None
-    else:
-        home_soup = fetcher.get(school["home"])
-        if home_soup is None:
-            return Verdict(MANUAL, evidence="首頁抓取失敗")
-        candidates = discover(home_soup, school["home"], cfg, limit=4)
-        if not candidates:
-            return Verdict(MANUAL, evidence="首頁找不到招生連結（可能為 JS 導覽）",
-                           pages_checked=1)
+    manual 只保留給「連頁面都抓不到」的情況。抓得到但沒命中，
+    就是尚未開放 —— 那是正常狀態，不是異常。
+    """
+    print(f"  {school['name']}")
 
-    # 首頁本身也要驗，學校常把公告直接掛在首頁
-    queue: list[tuple[str, int]] = [(school["home"], 0)]
-    queue += [(u, 1) for u in candidates]
+    start = school.get("entry") or school["home"]
+    root = fetcher.get(start)
 
-    seen: set[str] = set()
-    checked = 0
-    discovered_for_cache: list[str] = list(candidates)
+    # 指定了 entry 但抓不到，退回首頁再試
+    if root is None and school.get("entry"):
+        print("      entry 抓取失敗，改用首頁")
+        start = school["home"]
+        root = fetcher.get(start)
 
-    while queue and checked < cfg["max_pages_per_school"]:
-        url, depth = queue.pop(0)
-        if url in seen:
+    if root is None:
+        return Verdict(MANUAL, evidence="網站抓取失敗，請自行查看")
+
+    checked = 1
+    hit, evidence = judge_page(root, start, cfg)
+    if hit:
+        print(f"    → OPEN  {start}")
+        return Verdict(OPEN, evidence, start, checked, cached or [])
+
+    # 跟進候選頁：快取優先，否則從這一頁現找
+    candidates = list(cached) if cached else discover(root, start, cfg, limit=5)
+    seen = {start}
+    followed: list[str] = []
+
+    for url in candidates:
+        if checked >= cfg["max_pages_per_school"] or url in seen:
             continue
         seen.add(url)
-
-        soup = home_soup if (url == school["home"] and home_soup) else fetcher.get(url)
-        home_soup = None
+        soup = fetcher.get(url)
         if soup is None:
             continue
         checked += 1
+        followed.append(url)
 
         hit, evidence = judge_page(soup, url, cfg)
         if hit:
             print(f"    → OPEN  {url}")
-            return Verdict(OPEN, evidence, url, checked, discovered_for_cache)
+            return Verdict(OPEN, evidence, url, checked, followed)
 
-        # 第二層：只跟進同時帶「中一」訊號的連結
-        if depth < cfg["max_depth"] - 1:
-            for nxt in discover(soup, url, cfg, limit=3):
-                if nxt not in seen:
-                    queue.append((nxt, depth + 1))
-                    if nxt not in discovered_for_cache:
-                        discovered_for_cache.append(nxt)
-
-    if checked == 0:
-        return Verdict(MANUAL, evidence="所有候選頁都抓不到")
-    return Verdict(CLOSED, source=school["home"], pages_checked=checked,
-                   candidates=discovered_for_cache)
+    return Verdict(CLOSED, source=start, pages_checked=checked,
+                   candidates=followed or candidates)
 
 
 # ---------------------------------------------------------------- notify
