@@ -37,6 +37,12 @@ jobs:
         run: |
           git config user.name  "dss-watch"
           git config user.email "actions@github.com"
-          git add data/
-          git diff --staged --quiet || git commit -m "狀態更新 $(TZ=Asia/Hong_Kong date '+%Y-%m-%d')"
-          git push
+          git add data/status.json data/discovered.json
+          git diff --staged --quiet && exit 0
+          git commit -m "狀態更新 $(TZ=Asia/Hong_Kong date '+%Y-%m-%d')"
+          # 網頁可能同時改過 overrides.json，先併回再推
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push && exit 0
+            sleep 5
+          done
+          exit 1
