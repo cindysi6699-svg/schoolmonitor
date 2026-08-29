@@ -321,34 +321,57 @@ def should_skip(ov: dict) -> str | None:
 
 # ---------------------------------------------------------------- notify
 
-def notify(newly_open: list[dict], recheck: list[dict], label: str) -> None:
+def notify(payload: dict, newly_open: list[dict], recheck: list[dict],
+           dropped: int, cfg: dict) -> None:
+    """
+    每天發一條彙總，不論有沒有變化 —— 沉默容易讓人懷疑程式是不是掛了。
+
+    但 @提及只留給真正的變化。天天 @ 的話，等到學校真的開放那天，
+    那一聲提示已經和背景雜訊沒有分別了。
+    """
     hook = os.environ.get("DISCORD_WEBHOOK", "").strip()
     if not hook:
         print("DISCORD_WEBHOOK 未設定，略過通知")
         return
-    if not newly_open and not recheck:
-        return
 
-    lines = []
+    c = payload["counts"]
+    today = datetime.now(HKT).strftime("%-m月%-d日")
+    uid = os.environ.get("DISCORD_USER_ID", "").strip()
+    ping = f"<@{uid}>\n" if (uid and (newly_open or recheck)) else ""
+
+    lines = [f"{ping}**{cfg['target_label']} 中一招生日報** · {today}"]
+    tally = [f"**{c['open']}** 已開放", f"**{c['closed']}** 尚未開放"]
+    if c["manual"]:
+        tally.append(f"**{c['manual']}** 需人工確認")
+    if dropped:
+        tally.append(f"{dropped} 已 Drop")
+    lines.append(" · ".join(tally))
+
     if newly_open:
-        lines.append(f"**{label} 中一入學申請已開放**")
-        lines.append("")
+        lines += ["", "**今日新開放**"]
         for s in newly_open:
             lines.append(f"• **{s['name']}**（{s['band']}）\n  {s['source']}")
-        lines.append("")
-        lines.append("請自行到校網確認截止日期及所需文件。")
+        lines.append("截止日期與所需文件請自行到校網確認。")
+
     if recheck:
-        if lines:
-            lines.append("")
-        lines.append("**以下學校你標為未開放，但網站內容已變，請複核**")
-        lines.append("")
+        lines += ["", "**你標為未開放，但網站內容已變，請複核**"]
         for s in recheck:
             lines.append(f"• **{s['name']}**（{s['band']}）\n  {s['source']}")
+
+    manual = [s for s in payload["schools"] if s["status"] == "manual"]
+    if manual:
+        names = "、".join(s["name"] for s in manual[:6])
+        more = f" 等 {len(manual)} 間" if len(manual) > 6 else ""
+        lines += ["", f"讀不到的學校：{names}{more}"]
+
+    site = cfg.get("site_url", "").strip()
+    if site:
+        lines += ["", site]
 
     try:
         r = requests.post(hook, json={"content": "\n".join(lines)}, timeout=15)
         r.raise_for_status()
-        print(f"已推送：新開放 {len(newly_open)} 間，待複核 {len(recheck)} 間")
+        print(f"已推送日報（新開放 {len(newly_open)}，待複核 {len(recheck)}）")
     except Exception as exc:
         print(f"Discord 推送失敗：{exc}")
 
@@ -456,8 +479,7 @@ def main() -> int:
     c = payload["counts"]
     print(f"\n開放 {c['open']} ／ 未開放 {c['closed']} ／ 待人工確認 {c['manual']}")
 
-    if newly_open or recheck:
-        notify(newly_open, recheck, cfg["target_label"])
+    notify(payload, newly_open, recheck, len(schools) - len(active), cfg)
     return 0
 
 

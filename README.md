@@ -21,10 +21,17 @@ data/                           結果（由程式自動寫入）
 
 倉庫 → Settings → Secrets and variables → Actions → New repository secret
 
-- Name：`DISCORD_WEBHOOK`
-- Secret：你的 webhook 網址
+| Name | 值 | 必填 |
+|---|---|---|
+| `DISCORD_WEBHOOK` | webhook 網址 | 是 |
+| `DISCORD_USER_ID` | 你的 Discord 數字 ID | 否，填了才會 @ 你 |
 
-沒設也能跑，只是不推送。**切勿把網址寫進任何檔案**，這是 public 倉庫。
+取得 ID：Discord 設定 →「進階」→ 開啟「開發者模式」→ 長按自己頭像 →「複製使用者 ID」。
+
+**切勿把 webhook 寫進任何檔案**，這是 public 倉庫。
+
+**通知規則**：每天固定發一條彙總，內容為各狀態的數量。只有「新開放」和
+「需複核」才會 @ 你 —— 天天 @ 的話，真有事那天你反而分辨不出來。
 
 **3. 開啟網頁**
 
