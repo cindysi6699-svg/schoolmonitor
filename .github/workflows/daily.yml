@@ -31,6 +31,7 @@ jobs:
       - name: 執行檢查
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_USER_ID: ${{ secrets.DISCORD_USER_ID }}
         run: python check.py
 
       - name: 提交結果
