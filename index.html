@@ -67,6 +67,21 @@ select.pg-doing{color:var(--wait);font-weight:500}
 .evi{display:block;font-size:.72rem;color:var(--muted);margin-top:.25rem;max-width:22rem}
 .manual{font-family:"Archivo Narrow",sans-serif;font-size:.7rem;color:var(--wait);
   letter-spacing:.06em;display:block;margin-top:.2rem}
+.stale{font-family:"Archivo Narrow",sans-serif;font-size:.7rem;color:var(--chop);
+  letter-spacing:.06em;display:block;margin-top:.2rem;font-weight:600}
+select:disabled,input.dt:disabled{opacity:.45;cursor:not-allowed;background:transparent}
+select option:disabled{color:var(--faint)}
+
+button.drop,button.undrop{font-family:"Archivo Narrow",sans-serif;font-size:.72rem;
+  letter-spacing:.08em;background:none;color:var(--faint);
+  border:1px solid transparent;border-radius:3px;padding:.2rem .45rem;
+  opacity:0;transition:opacity .12s ease}
+tbody tr:hover button.drop,tbody tr:hover button.undrop,
+button.drop:focus-visible,button.undrop:focus-visible{opacity:1}
+button.drop:hover{color:var(--chop);border-color:var(--chop);background:none}
+button.undrop{opacity:1;color:var(--muted);border-color:var(--rule)}
+button.undrop:hover{color:var(--live);border-color:var(--live);background:none}
+td[data-c="drop"]{text-align:right;width:1%;white-space:nowrap}
 
 tr.dropped{opacity:.4}
 tr.dropped .name{text-decoration:line-through;color:var(--faint)}
@@ -103,6 +118,8 @@ footer{margin-top:2rem;padding-top:1.1rem;border-top:1px solid var(--rule);
   td[data-c="cur"]{display:block;margin-top:.2rem;font-size:.8rem}
   td[data-c="status"],td[data-c="prog"],td[data-c="date"]{
     display:inline-block;margin:.5rem .5rem 0 0}
+  td[data-c="drop"]{display:inline-block;margin-top:.5rem;text-align:left}
+  button.drop,button.undrop{opacity:1}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -120,7 +137,7 @@ footer{margin-top:2rem;padding-top:1.1rem;border-top:1px solid var(--rule);
     <thead><tr>
       <th>學校</th><th>區域</th><th>Band</th><th>男女校</th>
       <th class="num">全年學費</th><th>課程類型</th>
-      <th>開放狀態</th><th>申請進度</th><th>日期備註</th>
+      <th>開放狀態</th><th>申請進度</th><th>日期備註</th><th></th>
     </tr></thead>
     <tbody id="tb"></tbody>
   </table>
@@ -339,8 +356,7 @@ const SEED = [
 
 /* ---------------- 狀態常量 ---------------- */
 const OPEN="open", CLOSED="closed", MANUAL="manual";
-const PROG=[["not_started","未開始"],["in_progress","進行中"],
-            ["applied","已申請"],["drop","Drop"]];
+const PROG=[["not_started","未開始"],["in_progress","進行中"],["applied","已申請"]];
 const OVS=[["auto","自動偵測"],["open","已開放"],["closed","未開始"]];
 
 const LS_OV="dss.overrides", LS_TOK="dss.token";
@@ -365,7 +381,19 @@ function saveLocal(){
   localStorage.setItem(LS_OV, JSON.stringify(overrides));
 }
 function ovOf(name){
-  return overrides[name] || (overrides[name]={status:"auto",progress:"not_started",date:""});
+  return overrides[name] ||
+    (overrides[name]={status:"auto",progress:"not_started",dropped:false,date:""});
+}
+
+/* 舊資料遷移：progress:"drop" → dropped:true */
+function migrate(){
+  let changed=false;
+  for(const o of Object.values(overrides)){
+    if(o && o.progress==="drop"){
+      o.dropped=true; o.progress="not_started"; changed=true;
+    }
+  }
+  return changed;
 }
 
 /* ---------------- 合併：人工優先 ---------------- */
@@ -374,18 +402,26 @@ function effective(r){
   if(o && o.status && o.status!=="auto") return o.status;
   return r.status;                     // 爬蟲結果
 }
+function isStale(r){
+  const o=overrides[r.name];
+  if(!o || o.status!=="closed") return false;
+  if(r.status!==OPEN) return false;
+  return (r.evidence||"") !== (o.seen_evidence||"");
+}
 function isManualSet(r){
   const o = overrides[r.name];
   return !!(o && o.status && o.status!=="auto");
 }
 
 /* ---------------- 渲染 ---------------- */
-function sel(cls, opts, val, onChange){
+function sel(cls, opts, val, onChange, lockedSet){
   const s=document.createElement("select");
   s.className=cls;
   for(const [v,label] of opts){
     const o=document.createElement("option");
-    o.value=v; o.textContent=label; if(v===val) o.selected=true;
+    o.value=v; o.textContent=label;
+    if(v===val) o.selected=true;
+    if(lockedSet && lockedSet.has(v) && v!==val) o.disabled=true;
     s.appendChild(o);
   }
   s.addEventListener("change", ()=>onChange(s.value));
@@ -398,8 +434,8 @@ function render(){
   const rank={open:0,manual:1,closed:2,undefined:3};
 
   const sorted=[...rows].sort((a,b)=>{
-    const da=(overrides[a.name]||{}).progress==="drop";
-    const db=(overrides[b.name]||{}).progress==="drop";
+    const da=!!(overrides[a.name]||{}).dropped;
+    const db=!!(overrides[b.name]||{}).dropped;
     if(da!==db) return da?1:-1;                       // drop 沉底
     const ea=effective(a), eb=effective(b);
     return (rank[ea]??3)-(rank[eb]??3) ||
@@ -410,13 +446,14 @@ function render(){
     const o=ovOf(r.name);
     const eff=effective(r);
     const tr=document.createElement("tr");
-    if(o.progress==="drop") tr.className="dropped";
+    if(o.dropped) tr.className="dropped";
 
     tr.innerHTML=
       `<td data-c="name"><a class="name" href="${r.source||r.home}" target="_blank" rel="noopener">${r.name}</a>`+
         (isManualSet(r)?`<span class="pin" title="已人工設定"></span>`:"")+
         (r.status===MANUAL && !isManualSet(r)
           ? `<span class="manual">程式讀不到此站，請自行確認</span>`:"")+
+        (isStale(r) ? `<span class="stale">程式偵測結果已變，請複核</span>`:"")+
       `</td>`+
       `<td data-c="district" class="meta">${r.district||"—"}</td>`+
       `<td data-c="band" class="meta">${r.band||"—"}</td>`+
@@ -432,7 +469,11 @@ function render(){
     const label = OVS.map(([v,t])=>
       v==="auto" ? [v, eff===OPEN?"自動：已開放":eff===MANUAL?"自動：待確認":"自動：未開放"] : [v,t]);
     tdS.appendChild(sel(cls, label, o.status||"auto", v=>{
-      o.status=v; commit();
+      o.status=v;
+      // 記下你按下時程式看到的證據；之後證據一變就提醒複核
+      if(v==="closed") o.seen_evidence = r.evidence || "";
+      else delete o.seen_evidence;
+      commit();
     }));
     tr.appendChild(tdS);
 
@@ -440,19 +481,36 @@ function render(){
     const tdP=document.createElement("td"); tdP.dataset.c="prog";
     const pcls = o.progress==="applied" ? "pg-applied"
                : o.progress==="in_progress" ? "pg-doing" : "";
-    tdP.appendChild(sel(pcls, PROG, o.progress||"not_started", v=>{
+    // 申請進度只在開放後才有意義；Drop 已獨立成行末按鈕，不受此限制
+    const ps = sel(pcls, PROG, o.progress||"not_started", v=>{
       o.progress=v; commit();
-    }));
+    });
+    ps.disabled = eff!==OPEN;
+    if(ps.disabled) ps.title="開放後才能填寫申請進度";
+    tdP.appendChild(ps);
     tr.appendChild(tdP);
 
     // 日期備註（自行維護）
     const tdD=document.createElement("td"); tdD.dataset.c="date";
     const inp=document.createElement("input");
     inp.className="dt"; inp.type="text"; inp.value=o.date||"";
-    inp.placeholder="截止/面試…";
+    inp.placeholder = eff===OPEN ? "截止/面試…" : "開放後可填";
+    inp.disabled = eff!==OPEN;
     inp.addEventListener("change",()=>{ o.date=inp.value.trim(); commit(); });
     tdD.appendChild(inp);
     tr.appendChild(tdD);
+
+    // 行末：Drop / 復原。低頻且可逆，故不常駐、不彈確認框。
+    const tdX=document.createElement("td"); tdX.dataset.c="drop";
+    const btn=document.createElement("button");
+    btn.className = o.dropped ? "undrop" : "drop";
+    btn.textContent = o.dropped ? "復原" : "Drop";
+    btn.title = o.dropped ? "放回監控名單" : "移出名單，並停止每日檢查";
+    btn.setAttribute("aria-label",
+      (o.dropped?"復原 ":"移除 ")+r.name);
+    btn.onclick=()=>{ o.dropped=!o.dropped; commit(); };
+    tdX.appendChild(btn);
+    tr.appendChild(tdX);
 
     tb.appendChild(tr);
   }
@@ -462,7 +520,7 @@ function render(){
 function updateBar(){
   let open=0,closed=0,manual=0,dropped=0;
   for(const r of rows){
-    if((overrides[r.name]||{}).progress==="drop"){dropped++;continue;}
+    if((overrides[r.name]||{}).dropped){dropped++;continue;}
     const e=effective(r);
     if(e===OPEN)open++; else if(e===MANUAL)manual++; else closed++;
   }
@@ -543,6 +601,7 @@ document.getElementById("clear").onclick=()=>{
 
 /* ---------------- 啟動 ---------------- */
 loadLocal();
+if(migrate()) saveLocal();
 if(localStorage.getItem(LS_TOK)) msg("已連接","ok");
 
 Promise.all([
@@ -553,7 +612,9 @@ Promise.all([
   document.title=`${d.target_label} 直資中一招生狀態`;
   // 遠端設定為準，本機沒有的補上
   overrides = Object.keys(remote||{}).length ? {...overrides,...remote} : overrides;
+  const moved = migrate();
   saveLocal();
+  if(moved && localStorage.getItem(LS_TOK)) push();   // 把遷移後的格式寫回倉庫
   rows=d.schools;
   const t=new Date(d.updated_at);
   window.__stamp="最後檢查 "+t.toLocaleString("zh-HK",

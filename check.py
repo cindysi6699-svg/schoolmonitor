@@ -294,9 +294,11 @@ def load_overrides() -> dict:
     """
     網頁寫回的人工設定。結構：
         { "協恩中學": {"status":"open|closed|auto",
-                       "progress":"not_started|in_progress|applied|drop",
+                       "progress":"not_started|in_progress|applied",
+                       "dropped": true|false,
                        "date":"自由文字"} }
-    人工永遠優先於爬蟲。
+    人工永遠優先於爬蟲。dropped 與 progress 分開：一間已申請的學校
+    仍可能被 drop，兩者不該互相覆蓋。
     """
     if not OVERRIDE_FILE.exists():
         return {}
@@ -309,7 +311,8 @@ def load_overrides() -> dict:
 
 def should_skip(ov: dict) -> str | None:
     """回傳跳過原因，None 代表要照常檢查。"""
-    if ov.get("progress") == "drop":
+    # 相容舊格式 progress:"drop"
+    if ov.get("dropped") or ov.get("progress") == "drop":
         return "已 drop"
     if ov.get("status") == "open":
         return "已人工標為開放"
@@ -318,22 +321,34 @@ def should_skip(ov: dict) -> str | None:
 
 # ---------------------------------------------------------------- notify
 
-def notify(newly_open: list[dict], label: str) -> None:
+def notify(newly_open: list[dict], recheck: list[dict], label: str) -> None:
     hook = os.environ.get("DISCORD_WEBHOOK", "").strip()
     if not hook:
         print("DISCORD_WEBHOOK 未設定，略過通知")
         return
+    if not newly_open and not recheck:
+        return
 
-    lines = [f"**{label} 中一入學申請已開放**", ""]
-    for s in newly_open:
-        lines.append(f"• **{s['name']}**（{s['band']}）\n  {s['source']}")
-    lines.append("")
-    lines.append("請自行到校網確認截止日期及所需文件。")
+    lines = []
+    if newly_open:
+        lines.append(f"**{label} 中一入學申請已開放**")
+        lines.append("")
+        for s in newly_open:
+            lines.append(f"• **{s['name']}**（{s['band']}）\n  {s['source']}")
+        lines.append("")
+        lines.append("請自行到校網確認截止日期及所需文件。")
+    if recheck:
+        if lines:
+            lines.append("")
+        lines.append("**以下學校你標為未開放，但網站內容已變，請複核**")
+        lines.append("")
+        for s in recheck:
+            lines.append(f"• **{s['name']}**（{s['band']}）\n  {s['source']}")
 
     try:
         r = requests.post(hook, json={"content": "\n".join(lines)}, timeout=15)
         r.raise_for_status()
-        print(f"已推送 {len(newly_open)} 間學校")
+        print(f"已推送：新開放 {len(newly_open)} 間，待複核 {len(recheck)} 間")
     except Exception as exc:
         print(f"Discord 推送失敗：{exc}")
 
@@ -362,7 +377,7 @@ def main() -> int:
 
     overrides = load_overrides()
     fetcher = Fetcher(cfg)
-    results, newly_open, new_cache = [], [], {}
+    results, newly_open, recheck, new_cache = [], [], [], {}
 
     active = [s for s in schools if not should_skip(overrides.get(s["name"], {}))]
     print(f"共 {len(schools)} 間，本次檢查 {len(active)} 間"
@@ -410,9 +425,15 @@ def main() -> int:
         }
         results.append(row)
 
-        # 只在「首次」轉為開放時通知；已 drop / 已人工標開放的不推
-        if v.status == OPEN and not was_open and not skip:
-            newly_open.append(row)
+        if not skip:
+            if ov.get("status") == "closed":
+                # 你判斷過「未開放」。程式仍每天檢查，但只在偵測證據
+                # 和你當初看到的不同時才提醒 —— 否則同一個誤判會天天吵，
+                # 等它真的開放時你反而分不出來。
+                if v.status == OPEN and v.evidence != ov.get("seen_evidence", ""):
+                    recheck.append(row)
+            elif v.status == OPEN and not was_open:
+                newly_open.append(row)
 
     order = {OPEN: 0, MANUAL: 1, CLOSED: 2}
     results.sort(key=lambda r: (order[r["status"]], r["last_open"] or "zz"))
@@ -435,8 +456,8 @@ def main() -> int:
     c = payload["counts"]
     print(f"\n開放 {c['open']} ／ 未開放 {c['closed']} ／ 待人工確認 {c['manual']}")
 
-    if newly_open:
-        notify(newly_open, cfg["target_label"])
+    if newly_open or recheck:
+        notify(newly_open, recheck, cfg["target_label"])
     return 0
 
 
