@@ -1,1 +1,97 @@
-{}
+{
+  "保良局顏寶鈴書院": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "協恩中學": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "優才（楊殷有娣）書院": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "拔萃女書院": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "滙基書院（東九龍）": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "福建中學": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "保良局羅氏基金中學": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "聖士提反書院": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "德望學校": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "中華基金中學": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "香港神託會培基書院": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "聖保羅男女中學": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "香港青年協會李兆基書院": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "基督教崇真中學": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "香港管理專業協會李國寶中學": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "浸大附屬學校王錦輝中小學": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "港大同學會書院": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "培僑書院": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  },
+  "聖保祿學校": {
+    "status": "auto",
+    "progress": "not_started",
+    "date": ""
+  }
+}
