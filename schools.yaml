@@ -1,0 +1,169 @@
+# 監察對象：20 間直資中學（男女校及女校），2027/28 中一入學申請
+#
+# name / home 為程式必需；其餘欄位僅供網頁顯示。
+# entry: 可選，指定招生頁後跳過自動發現。
+# 學費為 2025/26 年度全年學費，僅供參考。
+
+schools:
+- name: 優才（楊殷有娣）書院
+  home: https://www.gtcollege.edu.hk/
+  band: 1B
+  last_open: 09-22
+  district: 西貢區
+  gender: 男女
+  fee: $39,600
+  curriculum: DSE ＋ IBDP
+- name: 拔萃女書院
+  home: https://www.dgs.edu.hk/
+  band: 1A
+  last_open: 09-29
+  district: 油尖旺
+  gender: 女校
+  fee: $42,000
+  curriculum: DSE ＋ IAL
+- name: 滙基書院（東九龍）
+  home: https://www.uccke.edu.hk/
+  band: 1A
+  last_open: 09-29
+  district: 觀塘區
+  gender: 男女
+  fee: $29,800
+  curriculum: DSE ＋ IGCSE ＋ IAL
+- name: 福建中學
+  home: https://www.fms.edu.hk/
+  band: 1B
+  last_open: 09-29
+  district: 觀塘區
+  gender: 男女
+  fee: $24,500
+  curriculum: DSE
+- name: 保良局羅氏基金中學
+  home: https://www.plklfc.edu.hk/
+  band: 1B
+  last_open: 09-29
+  district: 西貢區
+  gender: 男女
+  fee: $19,800
+  curriculum: DSE
+- name: 聖士提反書院
+  home: https://www.ssc.edu.hk/
+  band: 1B
+  last_open: 10-04
+  district: 南區
+  gender: 男女
+  fee: $74,550
+  curriculum: DSE ＋ IBDP
+- name: 德望學校
+  home: https://www.ghs.edu.hk/
+  band: 1A
+  last_open: 10-06
+  district: 黃大仙
+  gender: 女校
+  fee: $36,750
+  curriculum: DSE
+- name: 中華基金中學
+  home: https://www.cfss.edu.hk/
+  band: 1B
+  last_open: 10-06
+  district: 東區
+  gender: 男女
+  fee: $20,960
+  curriculum: DSE
+- name: 協恩中學
+  home: https://www.hys.edu.hk/
+  band: 1A
+  last_open: 10-11
+  district: 九龍城
+  gender: 女校
+  fee: $43,748
+  curriculum: DSE
+- name: 香港神託會培基書院
+  home: https://www.spkc.edu.hk/
+  band: 1C–1B
+  last_open: 10-20
+  district: 沙田區
+  gender: 男女
+  fee: $30,900
+  curriculum: DSE ＋ IAL
+- name: 聖保羅男女中學
+  home: https://www.spcc.edu.hk/chi
+  entry: https://www.spcc.edu.hk/chi/admissions/local-admissions/secondary/f1
+  band: 1A
+  last_open: 10-27
+  district: 中西區
+  gender: 男女
+  fee: $84,300
+  curriculum: DSE ＋ IBDP
+- name: 播道書院
+  home: https://www.evangel.edu.hk/
+  band: 1B
+  last_open: 10-30
+  district: 西貢區
+  gender: 男女
+  fee: $30,300
+  curriculum: DSE
+- name: 香港青年協會李兆基書院
+  home: https://www.hlc.edu.hk/
+  band: 1C
+  last_open: 10-31
+  district: 元朗區
+  gender: 男女
+  fee: $28,360
+  curriculum: DSE ＋ IAL
+- name: 基督教崇真中學
+  home: https://www.ttca.edu.hk/
+  band: Band 1
+  last_open: 11-01
+  district: 深水埗
+  gender: 男女
+  fee: $42,500
+  curriculum: DSE ＋ IAL
+- name: 香港管理專業協會李國寶中學
+  home: https://www.hkmadavidli.edu.hk/
+  band: 1B
+  last_open: 11-02
+  district: 油尖旺
+  gender: 男女
+  fee: $39,780
+  curriculum: DSE
+- name: 浸大附屬學校王錦輝中小學
+  home: https://www.hkbuas.edu.hk/
+  band: 1C–1B
+  last_open: 11-08
+  district: 沙田區
+  gender: 男女
+  fee: $44,800
+  curriculum: DSE ＋ IGCSE ＋ IAL
+- name: 港大同學會書院
+  home: https://www.hkugac.edu.hk/
+  band: 1A
+  last_open: 11-12
+  district: 南區
+  gender: 男女
+  fee: $46,500
+  curriculum: DSE ＋ IAL
+- name: 保良局顏寶鈴書院
+  home: https://www.npl.edu.hk/
+  band: 1B
+  last_open: 11-17
+  district: 九龍城
+  gender: 男女
+  fee: $35,200
+  curriculum: DSE ＋ IBDP
+- name: 培僑書院
+  home: https://www.puikiucollege.edu.hk/
+  entry: https://application.puikiucollege.edu.hk/event/all?cat_id=19&lang=zh
+  band: 1A
+  last_open: 11-25
+  district: 沙田區
+  gender: 男女
+  fee: $32,900
+  curriculum: DSE
+- name: 聖保祿學校
+  home: https://www.spcs.edu.hk/
+  band: 1A
+  last_open: 待確認
+  district: 灣仔區
+  gender: 女校
+  fee: $30,000
+  curriculum: DSE ＋ IGCSE ＋ IAL

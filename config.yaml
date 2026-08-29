@@ -1,0 +1,88 @@
+# 全域設定。改年份只需改這裡，明年沿用同一套程式碼。
+
+target_label: "2027/28"
+
+# 命中任一即視為「年份符合」。已含全形、繁簡、中文數字寫法。
+year_tokens:
+  - "2027/28"
+  - "2027/2028"
+  - "2027-28"
+  - "2027-2028"
+  - "2027–28"        # en dash
+  - "2027－28"        # 全形
+  - "27/28"
+  - "27-28"
+  - "2027至2028"
+  - "2027年9月"
+  - "2027年九月"
+  - "二零二七"
+  - "二〇二七"
+  - "二○二七"
+
+# 命中任一即視為「中一語境」。
+s1_tokens:
+  - "中一"
+  - "中一入學"
+  - "S1"
+  - "Secondary 1"
+  - "Secondary One"
+  - "Form 1"
+  - "F.1"
+
+# 命中任一即視為「招生語境」。
+admission_tokens:
+  - "入學"
+  - "招生"
+  - "報名"
+  - "收生"
+  - "申請"
+  - "admission"
+  - "apply"
+  - "application"
+  - "enrol"
+
+# 連結發現：href 或連結文字命中即加分
+link_hints_strong:
+  - "中一"
+  - "s1"
+  - "f1"
+  - "form1"
+  - "form-1"
+  - "secondary-one"
+  - "secondary1"
+link_hints_weak:
+  - "admission"
+  - "apply"
+  - "application"
+  - "enrol"
+  - "入學"
+  - "招生"
+  - "報名"
+  - "收生"
+
+# 排除：這些詞出現在連結上就跳過，避免爬到小一 / 插班 / 幼稚園
+link_blocklist:
+  - "小一"
+  - "小学"
+  - "小學"
+  - "primary"
+  - "p1"
+  - "幼稚園"
+  - "kindergarten"
+  - "插班"
+  - "transfer"
+  - "中六"
+  - "非本地"
+  - "international"
+  - "staff"
+  - "recruit"          # 教職員招聘，不是招生
+
+# 抓取預算
+max_pages_per_school: 8
+max_depth: 2
+request_delay_sec: 1.5
+timeout_sec: 20
+# 不少學校站點在 Cloudflare 後面，會拒絕非瀏覽器 UA，故用瀏覽器標識。
+# 每校每天僅數次請求，且有延遲，不構成負擔。
+user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+retries: 2

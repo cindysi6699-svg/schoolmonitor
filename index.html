@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>直資中學中一招生狀態</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EAEEE8; --card:#F5F7F3; --ink:#1C3A33;
+  --muted:#6D7F78; --faint:#93A29B; --rule:#C9D2C9;
+  --chop:#BE3A2B; --wait:#A9761F;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans TC",system-ui,sans-serif;line-height:1.55;
+  padding:clamp(1.25rem,4vw,3rem) clamp(.75rem,3vw,2rem) 5rem;}
+.wrap{max-width:74rem;margin:0 auto}
+
+.eyebrow{font-family:"Archivo Narrow",sans-serif;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;font-size:.72rem;color:var(--muted)}
+h1{font-family:"Noto Serif TC",serif;font-weight:700;
+  font-size:clamp(1.6rem,4.5vw,2.4rem);margin:.4rem 0 .6rem}
+h1 .yr{color:var(--chop)}
+.lede{color:var(--muted);max-width:40rem;font-size:.92rem}
+
+.bar{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1.8rem;
+  margin:1.5rem 0 1.75rem;padding-top:1.1rem;border-top:1px solid var(--rule);
+  font-family:"Archivo Narrow",sans-serif;font-size:.84rem;
+  letter-spacing:.06em;color:var(--muted)}
+.bar b{font-size:1.3rem;font-weight:700;color:var(--ink);
+  margin-right:.3rem;font-variant-numeric:tabular-nums}
+.bar .n-open b{color:var(--chop)}
+.stamp-time{margin-left:auto;font-size:.78rem;color:var(--faint)}
+
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+thead th{font-family:"Archivo Narrow",sans-serif;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;font-size:.68rem;
+  color:var(--muted);text-align:left;padding:.5rem .6rem;
+  border-bottom:1.5px solid var(--rule);white-space:nowrap}
+tbody td{padding:.75rem .6rem;border-bottom:1px solid var(--rule);vertical-align:baseline}
+tbody tr:hover{background:var(--card)}
+th.num,td.num{text-align:right;font-variant-numeric:tabular-nums}
+
+.name{font-family:"Noto Serif TC",serif;font-weight:600;font-size:1rem;
+  color:inherit;text-decoration:none}
+.name:hover{text-decoration:underline}
+.name:focus-visible{outline:2px solid var(--chop);outline-offset:2px}
+.meta{font-family:"Archivo Narrow",sans-serif;color:var(--muted);letter-spacing:.04em}
+.go{font-family:"Archivo Narrow",sans-serif;font-weight:600;font-size:.82rem;
+  letter-spacing:.08em;color:var(--ink);text-decoration:none;white-space:nowrap;
+  border-bottom:1.5px solid var(--rule);padding-bottom:.1rem}
+.go:hover{color:var(--chop);border-bottom-color:var(--chop)}
+.go:focus-visible{outline:2px solid var(--chop);outline-offset:3px}
+.arw{margin-left:.35rem;display:inline-block;transition:transform .15s ease}
+.go:hover .arw{transform:translateX(3px)}
+tr.is-open .go{color:var(--chop);border-bottom-color:var(--chop)}
+
+.chop{display:inline-block;font-family:"Noto Serif TC",serif;font-weight:700;
+  font-size:.78rem;color:var(--chop);border:1.5px solid var(--chop);border-radius:2px;
+  padding:.15rem .45rem;letter-spacing:.1em;white-space:nowrap;
+  transform:rotate(-3.5deg);box-shadow:inset 0 0 0 2.5px var(--card)}
+tr.is-open .name{color:var(--chop)}
+.pending{font-family:"Archivo Narrow",sans-serif;font-size:.78rem;
+  color:var(--wait);letter-spacing:.08em;white-space:nowrap}
+.dash,.unknown{color:var(--faint);font-family:"Archivo Narrow",sans-serif;font-size:.8rem}
+.evi{display:block;font-size:.75rem;color:var(--muted);margin-top:.25rem}
+
+.banner{background:var(--card);border-left:3px solid var(--wait);
+  padding:.75rem 1rem;margin-bottom:1.5rem;font-size:.85rem;color:var(--muted)}
+.banner code{font-family:"Archivo Narrow",sans-serif;
+  background:var(--paper);padding:.1rem .3rem;border-radius:2px}
+footer{margin-top:2.5rem;padding-top:1.1rem;border-top:1px solid var(--rule);
+  font-size:.78rem;color:var(--muted)}
+
+@media (max-width:52rem){
+  thead{display:none}
+  tbody tr{display:block;padding:.9rem .2rem;border-bottom:1px solid var(--rule)}
+  tbody td{display:inline;border:none;padding:0}
+  td[data-c="name"]{display:block;margin-bottom:.3rem}
+  td[data-c="status"]{display:block;margin-top:.55rem}
+  td[data-c="district"]::after,td[data-c="gender"]::after,
+  td[data-c="band"]::after,td[data-c="fee"]::after{content:" · ";color:var(--rule)}
+  td[data-c="cur"]{display:block;margin-top:.2rem;font-size:.8rem}
+  td[data-c="go"]{display:block;margin-top:.6rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">直資中學 · 中一入學</p>
+  <h1><span class="yr" id="yr">2027/28</span> 招生開放狀態</h1>
+  <p class="lede">每日香港時間早上自動查閱 20 間學校的網站，判斷目標學年的中一入學申請是否已開放報名。名單按狀態排序，開放中的排在最前。</p>
+
+  <div class="bar" id="bar"></div>
+  <div id="banner"></div>
+
+  <table>
+    <thead><tr>
+      <th>學校</th><th>區域</th><th>Band</th><th>男女校</th>
+      <th class="num">全年學費</th><th>課程類型</th><th>狀態</th><th>前往</th>
+    </tr></thead>
+    <tbody id="tb"></tbody>
+  </table>
+
+  <footer id="foot"></footer>
+</div>
+
+<script>
+const SEED = [
+  {
+    "name": "優才（楊殷有娣）書院",
+    "district": "西貢區",
+    "band": "1B",
+    "gender": "男女",
+    "fee": "$39,600",
+    "curriculum": "DSE ＋ IBDP",
+    "home": "https://www.gtcollege.edu.hk/",
+    "last_open": "09-22"
+  },
+  {
+    "name": "拔萃女書院",
+    "district": "油尖旺",
+    "band": "1A",
+    "gender": "女校",
+    "fee": "$42,000",
+    "curriculum": "DSE ＋ IAL",
+    "home": "https://www.dgs.edu.hk/",
+    "last_open": "09-29"
+  },
+  {
+    "name": "滙基書院（東九龍）",
+    "district": "觀塘區",
+    "band": "1A",
+    "gender": "男女",
+    "fee": "$29,800",
+    "curriculum": "DSE ＋ IGCSE ＋ IAL",
+    "home": "https://www.uccke.edu.hk/",
+    "last_open": "09-29"
+  },
+  {
+    "name": "福建中學",
+    "district": "觀塘區",
+    "band": "1B",
+    "gender": "男女",
+    "fee": "$24,500",
+    "curriculum": "DSE",
+    "home": "https://www.fms.edu.hk/",
+    "last_open": "09-29"
+  },
+  {
+    "name": "保良局羅氏基金中學",
+    "district": "西貢區",
+    "band": "1B",
+    "gender": "男女",
+    "fee": "$19,800",
+    "curriculum": "DSE",
+    "home": "https://www.plklfc.edu.hk/",
+    "last_open": "09-29"
+  },
+  {
+    "name": "聖士提反書院",
+    "district": "南區",
+    "band": "1B",
+    "gender": "男女",
+    "fee": "$74,550",
+    "curriculum": "DSE ＋ IBDP",
+    "home": "https://www.ssc.edu.hk/",
+    "last_open": "10-04"
+  },
+  {
+    "name": "德望學校",
+    "district": "黃大仙",
+    "band": "1A",
+    "gender": "女校",
+    "fee": "$36,750",
+    "curriculum": "DSE",
+    "home": "https://www.ghs.edu.hk/",
+    "last_open": "10-06"
+  },
+  {
+    "name": "中華基金中學",
+    "district": "東區",
+    "band": "1B",
+    "gender": "男女",
+    "fee": "$20,960",
+    "curriculum": "DSE",
+    "home": "https://www.cfss.edu.hk/",
+    "last_open": "10-06"
+  },
+  {
+    "name": "協恩中學",
+    "district": "九龍城",
+    "band": "1A",
+    "gender": "女校",
+    "fee": "$43,748",
+    "curriculum": "DSE",
+    "home": "https://www.hys.edu.hk/",
+    "last_open": "10-11"
+  },
+  {
+    "name": "香港神託會培基書院",
+    "district": "沙田區",
+    "band": "1C–1B",
+    "gender": "男女",
+    "fee": "$30,900",
+    "curriculum": "DSE ＋ IAL",
+    "home": "https://www.spkc.edu.hk/",
+    "last_open": "10-20"
+  },
+  {
+    "name": "聖保羅男女中學",
+    "district": "中西區",
+    "band": "1A",
+    "gender": "男女",
+    "fee": "$84,300",
+    "curriculum": "DSE ＋ IBDP",
+    "home": "https://www.spcc.edu.hk/chi",
+    "last_open": "10-27"
+  },
+  {
+    "name": "播道書院",
+    "district": "西貢區",
+    "band": "1B",
+    "gender": "男女",
+    "fee": "$30,300",
+    "curriculum": "DSE",
+    "home": "https://www.evangel.edu.hk/",
+    "last_open": "10-30"
+  },
+  {
+    "name": "香港青年協會李兆基書院",
+    "district": "元朗區",
+    "band": "1C",
+    "gender": "男女",
+    "fee": "$28,360",
+    "curriculum": "DSE ＋ IAL",
+    "home": "https://www.hlc.edu.hk/",
+    "last_open": "10-31"
+  },
+  {
+    "name": "基督教崇真中學",
+    "district": "深水埗",
+    "band": "Band 1",
+    "gender": "男女",
+    "fee": "$42,500",
+    "curriculum": "DSE ＋ IAL",
+    "home": "https://www.ttca.edu.hk/",
+    "last_open": "11-01"
+  },
+  {
+    "name": "香港管理專業協會李國寶中學",
+    "district": "油尖旺",
+    "band": "1B",
+    "gender": "男女",
+    "fee": "$39,780",
+    "curriculum": "DSE",
+    "home": "https://www.hkmadavidli.edu.hk/",
+    "last_open": "11-02"
+  },
+  {
+    "name": "浸大附屬學校王錦輝中小學",
+    "district": "沙田區",
+    "band": "1C–1B",
+    "gender": "男女",
+    "fee": "$44,800",
+    "curriculum": "DSE ＋ IGCSE ＋ IAL",
+    "home": "https://www.hkbuas.edu.hk/",
+    "last_open": "11-08"
+  },
+  {
+    "name": "港大同學會書院",
+    "district": "南區",
+    "band": "1A",
+    "gender": "男女",
+    "fee": "$46,500",
+    "curriculum": "DSE ＋ IAL",
+    "home": "https://www.hkugac.edu.hk/",
+    "last_open": "11-12"
+  },
+  {
+    "name": "保良局顏寶鈴書院",
+    "district": "九龍城",
+    "band": "1B",
+    "gender": "男女",
+    "fee": "$35,200",
+    "curriculum": "DSE ＋ IBDP",
+    "home": "https://www.npl.edu.hk/",
+    "last_open": "11-17"
+  },
+  {
+    "name": "培僑書院",
+    "district": "沙田區",
+    "band": "1A",
+    "gender": "男女",
+    "fee": "$32,900",
+    "curriculum": "DSE",
+    "home": "https://www.puikiucollege.edu.hk/",
+    "last_open": "11-25"
+  },
+  {
+    "name": "聖保祿學校",
+    "district": "灣仔區",
+    "band": "1A",
+    "gender": "女校",
+    "fee": "$30,000",
+    "curriculum": "DSE ＋ IGCSE ＋ IAL",
+    "home": "https://www.spcs.edu.hk/",
+    "last_open": "待確認"
+  }
+];
+const OPEN="open", CLOSED="closed", MANUAL="manual";
+
+function statusCell(s){
+  if(s.status===OPEN)    return '<span class="chop">已開放</span>';
+  if(s.status===MANUAL)  return '<span class="pending">需人工確認</span>'+
+                                (s.evidence?`<span class="evi">${s.evidence}</span>`:"");
+  if(s.status===CLOSED)  return '<span class="dash">尚未開放</span>';
+  return '<span class="unknown">未檢查</span>';
+}
+
+function render(rows, meta){
+  const tb=document.getElementById("tb");
+  tb.innerHTML="";
+  const rank={open:0,manual:1,closed:2,undefined:3};
+  rows.sort((a,b)=>(rank[a.status]??3)-(rank[b.status]??3) ||
+                   String(a.last_open).localeCompare(String(b.last_open)));
+
+  for(const s of rows){
+    const tr=document.createElement("tr");
+    if(s.status===OPEN) tr.className="is-open";
+    const link=s.source||s.home;
+    tr.innerHTML=
+      `<td data-c="name"><a class="name" href="${link}" target="_blank" rel="noopener">${s.name}</a></td>`+
+      `<td data-c="district" class="meta">${s.district||"—"}</td>`+
+      `<td data-c="band" class="meta">${s.band||"—"}</td>`+
+      `<td data-c="gender" class="meta">${s.gender||"—"}</td>`+
+      `<td data-c="fee" class="num meta">${s.fee||"—"}</td>`+
+      `<td data-c="cur" class="meta">${s.curriculum||"—"}</td>`+
+      `<td data-c="status">${statusCell(s)}</td>`+
+      `<td data-c="go"><a class="go" href="${link}" target="_blank" rel="noopener">去申請<span class="arw" aria-hidden="true">→</span></a></td>`;
+    tb.appendChild(tr);
+  }
+
+  const c={open:0,closed:0,manual:0,unknown:0};
+  rows.forEach(s=>c[s.status||"unknown"]++);
+  document.getElementById("bar").innerHTML=
+    `<span class="n-open"><b>${c.open}</b>已開放</span>`+
+    `<span><b>${c.closed}</b>尚未開放</span>`+
+    `<span><b>${c.manual}</b>需人工確認</span>`+
+    (c.unknown?`<span><b>${c.unknown}</b>未檢查</span>`:"")+
+    `<span class="stamp-time">${meta}</span>`;
+}
+
+function offline(msg){
+  document.getElementById("banner").innerHTML=
+    `<div class="banner">${msg}</div>`;
+  render(SEED.map(s=>({...s})), "尚未執行檢查");
+  document.getElementById("foot").innerHTML=
+    "學費為 2025/26 年度數字，僅供參考。報名詳情一律以學校官方公布為準。";
+}
+
+fetch("data/status.json?"+Date.now())
+  .then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
+  .then(d=>{
+    document.getElementById("yr").textContent=d.target_label;
+    document.title=`${d.target_label} 直資中一招生狀態`;
+    const t=new Date(d.updated_at);
+    const stamp="最後檢查 "+t.toLocaleString("zh-HK",{month:"long",day:"numeric",
+                  hour:"2-digit",minute:"2-digit",hour12:false});
+    render(d.schools, stamp);
+    document.getElementById("foot").innerHTML=
+      `判定方式：頁面上同時出現目標年份、<code>中一</code> 及招生字眼即視為已開放。`+
+      `「需人工確認」代表程式讀不到該校頁面，並非該校未開放，須自行查看。<br>`+
+      `學費為 2025/26 年度數字。報名詳情一律以學校官方公布為準。`;
+  })
+  .catch(e=>{
+    offline(location.protocol==="file:"
+      ? "以本機檔案開啟，瀏覽器不允許讀取 <code>data/status.json</code>，故只顯示學校名單。部署到 GitHub Pages 後即會顯示每日狀態。"
+      : `讀不到 <code>data/status.json</code>（${e.message}）。到 Actions 手動執行一次「每日檢查招生狀態」即可產生。`);
+  });
+</script>
+</body>
+</html>
