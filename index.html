@@ -11,23 +11,23 @@
 :root{
   --paper:#EAEEE8; --card:#F5F7F3; --ink:#1C3A33;
   --muted:#6D7F78; --faint:#93A29B; --rule:#C9D2C9;
-  --chop:#BE3A2B; --wait:#A9761F;
+  --chop:#BE3A2B; --wait:#A9761F; --live:#2F6E4E;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--paper);color:var(--ink);
   font-family:"Noto Sans TC",system-ui,sans-serif;line-height:1.55;
-  padding:clamp(1.25rem,4vw,3rem) clamp(.75rem,3vw,2rem) 5rem;}
-.wrap{max-width:74rem;margin:0 auto}
+  padding:clamp(1.25rem,4vw,3rem) clamp(.75rem,3vw,2rem) 5rem}
+.wrap{max-width:82rem;margin:0 auto}
 
 .eyebrow{font-family:"Archivo Narrow",sans-serif;font-weight:700;
   letter-spacing:.22em;text-transform:uppercase;font-size:.72rem;color:var(--muted)}
 h1{font-family:"Noto Serif TC",serif;font-weight:700;
   font-size:clamp(1.6rem,4.5vw,2.4rem);margin:.4rem 0 .6rem}
 h1 .yr{color:var(--chop)}
-.lede{color:var(--muted);max-width:40rem;font-size:.92rem}
+.lede{color:var(--muted);max-width:42rem;font-size:.92rem}
 
 .bar{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1.8rem;
-  margin:1.5rem 0 1.75rem;padding-top:1.1rem;border-top:1px solid var(--rule);
+  margin:1.5rem 0 1.25rem;padding-top:1.1rem;border-top:1px solid var(--rule);
   font-family:"Archivo Narrow",sans-serif;font-size:.84rem;
   letter-spacing:.06em;color:var(--muted)}
 .bar b{font-size:1.3rem;font-weight:700;color:var(--ink);
@@ -35,12 +35,12 @@ h1 .yr{color:var(--chop)}
 .bar .n-open b{color:var(--chop)}
 .stamp-time{margin-left:auto;font-size:.78rem;color:var(--faint)}
 
-table{width:100%;border-collapse:collapse;font-size:.9rem}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
 thead th{font-family:"Archivo Narrow",sans-serif;font-weight:600;
-  letter-spacing:.14em;text-transform:uppercase;font-size:.68rem;
-  color:var(--muted);text-align:left;padding:.5rem .6rem;
+  letter-spacing:.14em;text-transform:uppercase;font-size:.66rem;
+  color:var(--muted);text-align:left;padding:.5rem .55rem;
   border-bottom:1.5px solid var(--rule);white-space:nowrap}
-tbody td{padding:.75rem .6rem;border-bottom:1px solid var(--rule);vertical-align:baseline}
+tbody td{padding:.65rem .55rem;border-bottom:1px solid var(--rule);vertical-align:middle}
 tbody tr:hover{background:var(--card)}
 th.num,td.num{text-align:right;font-variant-numeric:tabular-nums}
 
@@ -49,42 +49,60 @@ th.num,td.num{text-align:right;font-variant-numeric:tabular-nums}
 .name:hover{text-decoration:underline}
 .name:focus-visible{outline:2px solid var(--chop);outline-offset:2px}
 .meta{font-family:"Archivo Narrow",sans-serif;color:var(--muted);letter-spacing:.04em}
-.go{font-family:"Archivo Narrow",sans-serif;font-weight:600;font-size:.82rem;
-  letter-spacing:.08em;color:var(--ink);text-decoration:none;white-space:nowrap;
-  border-bottom:1.5px solid var(--rule);padding-bottom:.1rem}
-.go:hover{color:var(--chop);border-bottom-color:var(--chop)}
-.go:focus-visible{outline:2px solid var(--chop);outline-offset:3px}
-.arw{margin-left:.35rem;display:inline-block;transition:transform .15s ease}
-.go:hover .arw{transform:translateX(3px)}
-tr.is-open .go{color:var(--chop);border-bottom-color:var(--chop)}
 
-.chop{display:inline-block;font-family:"Noto Serif TC",serif;font-weight:700;
-  font-size:.78rem;color:var(--chop);border:1.5px solid var(--chop);border-radius:2px;
-  padding:.15rem .45rem;letter-spacing:.1em;white-space:nowrap;
-  transform:rotate(-3.5deg);box-shadow:inset 0 0 0 2.5px var(--card)}
-tr.is-open .name{color:var(--chop)}
-.pending{font-family:"Archivo Narrow",sans-serif;font-size:.78rem;
-  color:var(--wait);letter-spacing:.08em;white-space:nowrap}
-.dash,.unknown{color:var(--faint);font-family:"Archivo Narrow",sans-serif;font-size:.8rem}
-.evi{display:block;font-size:.75rem;color:var(--muted);margin-top:.25rem}
+select,input.dt{font-family:"Noto Sans TC",sans-serif;font-size:.8rem;
+  color:var(--ink);background:var(--card);border:1px solid var(--rule);
+  border-radius:3px;padding:.28rem .4rem;max-width:100%}
+select:focus-visible,input.dt:focus-visible{outline:2px solid var(--chop);outline-offset:1px}
+input.dt{width:8.5rem}
+input.dt::placeholder{color:var(--faint)}
+select.ov-open{color:var(--chop);border-color:var(--chop);font-weight:500}
+select.ov-closed{color:var(--muted)}
+select.auto-open{color:var(--chop);font-weight:500}
+select.pg-applied{color:var(--live);font-weight:500}
+select.pg-doing{color:var(--wait);font-weight:500}
 
+.pin{display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--chop);margin-left:.35rem;vertical-align:middle}
+.evi{display:block;font-size:.72rem;color:var(--muted);margin-top:.25rem;max-width:22rem}
+.manual{font-family:"Archivo Narrow",sans-serif;font-size:.7rem;color:var(--wait);
+  letter-spacing:.06em;display:block;margin-top:.2rem}
+
+tr.dropped{opacity:.4}
+tr.dropped .name{text-decoration:line-through;color:var(--faint)}
+tr.dropped:hover{opacity:.65}
+
+.sync{margin-top:2.5rem;padding-top:1.25rem;border-top:1px solid var(--rule)}
+.sync h2{font-family:"Archivo Narrow",sans-serif;font-weight:600;font-size:.7rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem}
+.sync-row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:.82rem}
+.sync input{font-family:"Archivo Narrow",sans-serif;font-size:.8rem;
+  background:var(--card);border:1px solid var(--rule);border-radius:3px;
+  padding:.35rem .5rem;width:min(24rem,100%)}
+button{font-family:"Noto Sans TC",sans-serif;font-size:.8rem;cursor:pointer;
+  background:var(--ink);color:var(--paper);border:none;border-radius:3px;
+  padding:.4rem .8rem}
+button:hover{background:var(--chop)}
+button.ghost{background:none;color:var(--muted);border:1px solid var(--rule)}
+button.ghost:hover{color:var(--chop);border-color:var(--chop)}
+.hint{font-size:.78rem;color:var(--muted);margin-top:.6rem;max-width:44rem}
+.state-msg{font-family:"Archivo Narrow",sans-serif;font-size:.78rem;letter-spacing:.05em}
+.ok{color:var(--live)} .err{color:var(--chop)} .dim{color:var(--faint)}
 .banner{background:var(--card);border-left:3px solid var(--wait);
-  padding:.75rem 1rem;margin-bottom:1.5rem;font-size:.85rem;color:var(--muted)}
-.banner code{font-family:"Archivo Narrow",sans-serif;
-  background:var(--paper);padding:.1rem .3rem;border-radius:2px}
-footer{margin-top:2.5rem;padding-top:1.1rem;border-top:1px solid var(--rule);
+  padding:.7rem 1rem;margin-bottom:1.25rem;font-size:.84rem;color:var(--muted)}
+footer{margin-top:2rem;padding-top:1.1rem;border-top:1px solid var(--rule);
   font-size:.78rem;color:var(--muted)}
 
-@media (max-width:52rem){
+@media (max-width:60rem){
   thead{display:none}
   tbody tr{display:block;padding:.9rem .2rem;border-bottom:1px solid var(--rule)}
   tbody td{display:inline;border:none;padding:0}
-  td[data-c="name"]{display:block;margin-bottom:.3rem}
-  td[data-c="status"]{display:block;margin-top:.55rem}
+  td[data-c="name"]{display:block;margin-bottom:.35rem}
   td[data-c="district"]::after,td[data-c="gender"]::after,
   td[data-c="band"]::after,td[data-c="fee"]::after{content:" · ";color:var(--rule)}
   td[data-c="cur"]{display:block;margin-top:.2rem;font-size:.8rem}
-  td[data-c="go"]{display:block;margin-top:.6rem}
+  td[data-c="status"],td[data-c="prog"],td[data-c="date"]{
+    display:inline-block;margin:.5rem .5rem 0 0}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -93,7 +111,7 @@ footer{margin-top:2.5rem;padding-top:1.1rem;border-top:1px solid var(--rule);
 <div class="wrap">
   <p class="eyebrow">直資中學 · 中一入學</p>
   <h1><span class="yr" id="yr">2027/28</span> 招生開放狀態</h1>
-  <p class="lede">每日香港時間早上自動查閱 19 間學校的網站，判斷目標學年的中一入學申請是否已開放報名。名單按狀態排序，開放中的排在最前。</p>
+  <p class="lede">每日香港時間早上自動查閱各校網站。開放狀態可以自己改，改過的以你為準，程式不再覆蓋，也不再檢查。標為 Drop 的學校會退出每日監控。</p>
 
   <div class="bar" id="bar"></div>
   <div id="banner"></div>
@@ -101,10 +119,26 @@ footer{margin-top:2.5rem;padding-top:1.1rem;border-top:1px solid var(--rule);
   <table>
     <thead><tr>
       <th>學校</th><th>區域</th><th>Band</th><th>男女校</th>
-      <th class="num">全年學費</th><th>課程類型</th><th>狀態</th><th>前往</th>
+      <th class="num">全年學費</th><th>課程類型</th>
+      <th>開放狀態</th><th>申請進度</th><th>日期備註</th>
     </tr></thead>
     <tbody id="tb"></tbody>
   </table>
+
+  <section class="sync">
+    <h2>同步設定</h2>
+    <div class="sync-row">
+      <input id="tok" type="password" placeholder="GitHub Token（只存在這部裝置）" autocomplete="off">
+      <button id="save">連接</button>
+      <button id="clear" class="ghost">清除</button>
+      <span id="syncmsg" class="state-msg dim">未連接</span>
+    </div>
+    <p class="hint">
+      未連接時，改動只存在這部裝置的瀏覽器，每日檢查不會知道。連接後改動會寫回
+      <code>data/overrides.json</code>，Drop 與人工標為開放的學校便會退出監控。
+      Token 只保存在本機，不會出現在網頁原始碼裡。
+    </p>
+  </section>
 
   <footer id="foot"></footer>
 </div>
@@ -302,76 +336,241 @@ const SEED = [
     "last_open": "待確認"
   }
 ];
-const OPEN="open", CLOSED="closed", MANUAL="manual";
 
-function statusCell(s){
-  if(s.status===OPEN)    return '<span class="chop">已開放</span>';
-  if(s.status===MANUAL)  return '<span class="pending">需人工確認</span>'+
-                                (s.evidence?`<span class="evi">${s.evidence}</span>`:"");
-  if(s.status===CLOSED)  return '<span class="dash">尚未開放</span>';
-  return '<span class="unknown">未檢查</span>';
+/* ---------------- 狀態常量 ---------------- */
+const OPEN="open", CLOSED="closed", MANUAL="manual";
+const PROG=[["not_started","未開始"],["in_progress","進行中"],
+            ["applied","已申請"],["drop","Drop"]];
+const OVS=[["auto","自動偵測"],["open","已開放"],["closed","未開始"]];
+
+const LS_OV="dss.overrides", LS_TOK="dss.token";
+let overrides = {};     // 人工設定
+let rows = [];          // 合併後的顯示資料
+let remoteSha = null;   // overrides.json 在 GitHub 上的 sha
+
+/* ---------------- 倉庫位置（由網址推導） ---------------- */
+function repoInfo(){
+  const m = location.hostname.match(/^([^.]+)\.github\.io$/);
+  const seg = location.pathname.split("/").filter(Boolean);
+  if(!m) return null;
+  return {owner:m[1], repo: seg[0] || (m[1]+".github.io")};
 }
 
-function render(rows, meta){
+/* ---------------- 本機儲存 ---------------- */
+function loadLocal(){
+  try{ overrides = JSON.parse(localStorage.getItem(LS_OV)||"{}"); }
+  catch{ overrides = {}; }
+}
+function saveLocal(){
+  localStorage.setItem(LS_OV, JSON.stringify(overrides));
+}
+function ovOf(name){
+  return overrides[name] || (overrides[name]={status:"auto",progress:"not_started",date:""});
+}
+
+/* ---------------- 合併：人工優先 ---------------- */
+function effective(r){
+  const o = overrides[r.name];
+  if(o && o.status && o.status!=="auto") return o.status;
+  return r.status;                     // 爬蟲結果
+}
+function isManualSet(r){
+  const o = overrides[r.name];
+  return !!(o && o.status && o.status!=="auto");
+}
+
+/* ---------------- 渲染 ---------------- */
+function sel(cls, opts, val, onChange){
+  const s=document.createElement("select");
+  s.className=cls;
+  for(const [v,label] of opts){
+    const o=document.createElement("option");
+    o.value=v; o.textContent=label; if(v===val) o.selected=true;
+    s.appendChild(o);
+  }
+  s.addEventListener("change", ()=>onChange(s.value));
+  return s;
+}
+
+function render(){
   const tb=document.getElementById("tb");
   tb.innerHTML="";
   const rank={open:0,manual:1,closed:2,undefined:3};
-  rows.sort((a,b)=>(rank[a.status]??3)-(rank[b.status]??3) ||
-                   String(a.last_open).localeCompare(String(b.last_open)));
 
-  for(const s of rows){
+  const sorted=[...rows].sort((a,b)=>{
+    const da=(overrides[a.name]||{}).progress==="drop";
+    const db=(overrides[b.name]||{}).progress==="drop";
+    if(da!==db) return da?1:-1;                       // drop 沉底
+    const ea=effective(a), eb=effective(b);
+    return (rank[ea]??3)-(rank[eb]??3) ||
+           String(a.last_open).localeCompare(String(b.last_open));
+  });
+
+  for(const r of sorted){
+    const o=ovOf(r.name);
+    const eff=effective(r);
     const tr=document.createElement("tr");
-    if(s.status===OPEN) tr.className="is-open";
-    const link=s.source||s.home;
+    if(o.progress==="drop") tr.className="dropped";
+
     tr.innerHTML=
-      `<td data-c="name"><a class="name" href="${link}" target="_blank" rel="noopener">${s.name}</a></td>`+
-      `<td data-c="district" class="meta">${s.district||"—"}</td>`+
-      `<td data-c="band" class="meta">${s.band||"—"}</td>`+
-      `<td data-c="gender" class="meta">${s.gender||"—"}</td>`+
-      `<td data-c="fee" class="num meta">${s.fee||"—"}</td>`+
-      `<td data-c="cur" class="meta">${s.curriculum||"—"}</td>`+
-      `<td data-c="status">${statusCell(s)}</td>`+
-      `<td data-c="go"><a class="go" href="${link}" target="_blank" rel="noopener">去申請<span class="arw" aria-hidden="true">→</span></a></td>`;
+      `<td data-c="name"><a class="name" href="${r.source||r.home}" target="_blank" rel="noopener">${r.name}</a>`+
+        (isManualSet(r)?`<span class="pin" title="已人工設定"></span>`:"")+
+        (r.status===MANUAL && !isManualSet(r)
+          ? `<span class="manual">程式讀不到此站，請自行確認</span>`:"")+
+      `</td>`+
+      `<td data-c="district" class="meta">${r.district||"—"}</td>`+
+      `<td data-c="band" class="meta">${r.band||"—"}</td>`+
+      `<td data-c="gender" class="meta">${r.gender||"—"}</td>`+
+      `<td data-c="fee" class="num meta">${r.fee||"—"}</td>`+
+      `<td data-c="cur" class="meta">${r.curriculum||"—"}</td>`;
+
+    // 開放狀態
+    const tdS=document.createElement("td"); tdS.dataset.c="status";
+    const cls = o.status==="open" ? "ov-open"
+              : o.status==="closed" ? "ov-closed"
+              : (eff===OPEN ? "auto-open" : "");
+    const label = OVS.map(([v,t])=>
+      v==="auto" ? [v, eff===OPEN?"自動：已開放":eff===MANUAL?"自動：待確認":"自動：未開放"] : [v,t]);
+    tdS.appendChild(sel(cls, label, o.status||"auto", v=>{
+      o.status=v; commit();
+    }));
+    tr.appendChild(tdS);
+
+    // 申請進度
+    const tdP=document.createElement("td"); tdP.dataset.c="prog";
+    const pcls = o.progress==="applied" ? "pg-applied"
+               : o.progress==="in_progress" ? "pg-doing" : "";
+    tdP.appendChild(sel(pcls, PROG, o.progress||"not_started", v=>{
+      o.progress=v; commit();
+    }));
+    tr.appendChild(tdP);
+
+    // 日期備註（自行維護）
+    const tdD=document.createElement("td"); tdD.dataset.c="date";
+    const inp=document.createElement("input");
+    inp.className="dt"; inp.type="text"; inp.value=o.date||"";
+    inp.placeholder="截止/面試…";
+    inp.addEventListener("change",()=>{ o.date=inp.value.trim(); commit(); });
+    tdD.appendChild(inp);
+    tr.appendChild(tdD);
+
     tb.appendChild(tr);
   }
+  updateBar();
+}
 
-  const c={open:0,closed:0,manual:0,unknown:0};
-  rows.forEach(s=>c[s.status||"unknown"]++);
+function updateBar(){
+  let open=0,closed=0,manual=0,dropped=0;
+  for(const r of rows){
+    if((overrides[r.name]||{}).progress==="drop"){dropped++;continue;}
+    const e=effective(r);
+    if(e===OPEN)open++; else if(e===MANUAL)manual++; else closed++;
+  }
+  const t=window.__stamp||"尚未執行檢查";
   document.getElementById("bar").innerHTML=
-    `<span class="n-open"><b>${c.open}</b>已開放</span>`+
-    `<span><b>${c.closed}</b>尚未開放</span>`+
-    `<span><b>${c.manual}</b>需人工確認</span>`+
-    (c.unknown?`<span><b>${c.unknown}</b>未檢查</span>`:"")+
-    `<span class="stamp-time">${meta}</span>`;
+    `<span class="n-open"><b>${open}</b>已開放</span>`+
+    `<span><b>${closed}</b>尚未開放</span>`+
+    (manual?`<span><b>${manual}</b>待確認</span>`:"")+
+    (dropped?`<span><b>${dropped}</b>已 Drop</span>`:"")+
+    `<span class="stamp-time">${t}</span>`;
 }
 
-function offline(msg){
-  document.getElementById("banner").innerHTML=
-    `<div class="banner">${msg}</div>`;
-  render(SEED.map(s=>({...s})), "尚未執行檢查");
-  document.getElementById("foot").innerHTML=
-    "學費為 2025/26 年度數字，僅供參考。報名詳情一律以學校官方公布為準。";
+/* ---------------- 提交（本機即時 + 遠端防抖） ---------------- */
+let timer=null;
+function commit(){
+  saveLocal(); render();
+  if(!localStorage.getItem(LS_TOK)) { msg("改動只存在本機","dim"); return; }
+  clearTimeout(timer);
+  msg("儲存中…","dim");
+  timer=setTimeout(push,1200);
 }
 
-fetch("data/status.json?"+Date.now())
-  .then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
-  .then(d=>{
-    document.getElementById("yr").textContent=d.target_label;
-    document.title=`${d.target_label} 直資中一招生狀態`;
-    const t=new Date(d.updated_at);
-    const stamp="最後檢查 "+t.toLocaleString("zh-HK",{month:"long",day:"numeric",
-                  hour:"2-digit",minute:"2-digit",hour12:false});
-    render(d.schools, stamp);
-    document.getElementById("foot").innerHTML=
-      `判定方式：頁面上同時出現目標年份、<code>中一</code> 及招生字眼即視為已開放。`+
-      `「需人工確認」代表程式讀不到該校頁面，並非該校未開放，須自行查看。<br>`+
-      `學費為 2025/26 年度數字。報名詳情一律以學校官方公布為準。`;
-  })
-  .catch(e=>{
-    offline(location.protocol==="file:"
-      ? "以本機檔案開啟，瀏覽器不允許讀取 <code>data/status.json</code>，故只顯示學校名單。部署到 GitHub Pages 後即會顯示每日狀態。"
-      : `讀不到 <code>data/status.json</code>（${e.message}）。到 Actions 手動執行一次「每日檢查招生狀態」即可產生。`);
+function msg(text,cls){
+  const el=document.getElementById("syncmsg");
+  el.textContent=text; el.className="state-msg "+(cls||"");
+}
+
+async function gh(path,opts={}){
+  const info=repoInfo(); if(!info) throw new Error("非 GitHub Pages 網址");
+  const tok=localStorage.getItem(LS_TOK);
+  return fetch(`https://api.github.com/repos/${info.owner}/${info.repo}/contents/${path}`,{
+    ...opts,
+    headers:{Authorization:`Bearer ${tok}`,Accept:"application/vnd.github+json",...(opts.headers||{})}
   });
+}
+
+function b64(str){
+  const bytes=new TextEncoder().encode(str);
+  let bin=""; bytes.forEach(b=>bin+=String.fromCharCode(b));
+  return btoa(bin);
+}
+
+async function push(retry=true){
+  try{
+    if(remoteSha===null){
+      const r=await gh("data/overrides.json");
+      remoteSha = r.ok ? (await r.json()).sha : undefined;
+    }
+    const body={message:"更新申請進度",
+                content:b64(JSON.stringify(overrides,null,2))};
+    if(remoteSha) body.sha=remoteSha;
+    const r=await gh("data/overrides.json",{method:"PUT",body:JSON.stringify(body)});
+    if(r.status===409 && retry){ remoteSha=null; return push(false); }
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    remoteSha=(await r.json()).content.sha;
+    msg("已同步","ok");
+  }catch(e){
+    msg("同步失敗："+e.message+"（改動仍存在本機）","err");
+  }
+}
+
+/* ---------------- Token 設定 ---------------- */
+document.getElementById("save").onclick=async()=>{
+  const v=document.getElementById("tok").value.trim();
+  if(!v){ msg("請先貼上 token","err"); return; }
+  localStorage.setItem(LS_TOK,v);
+  document.getElementById("tok").value="";
+  msg("驗證中…","dim");
+  try{
+    const r=await gh("data/status.json");
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    remoteSha=null; msg("已連接，正在上傳現有設定…","ok"); await push();
+  }catch(e){ msg("連接失敗："+e.message,"err"); }
+};
+document.getElementById("clear").onclick=()=>{
+  localStorage.removeItem(LS_TOK); remoteSha=null; msg("已清除連接","dim");
+};
+
+/* ---------------- 啟動 ---------------- */
+loadLocal();
+if(localStorage.getItem(LS_TOK)) msg("已連接","ok");
+
+Promise.all([
+  fetch("data/status.json?"+Date.now()).then(r=>r.ok?r.json():Promise.reject(new Error("HTTP "+r.status))),
+  fetch("data/overrides.json?"+Date.now()).then(r=>r.ok?r.json():{}).catch(()=>({}))
+]).then(([d,remote])=>{
+  document.getElementById("yr").textContent=d.target_label;
+  document.title=`${d.target_label} 直資中一招生狀態`;
+  // 遠端設定為準，本機沒有的補上
+  overrides = Object.keys(remote||{}).length ? {...overrides,...remote} : overrides;
+  saveLocal();
+  rows=d.schools;
+  const t=new Date(d.updated_at);
+  window.__stamp="最後檢查 "+t.toLocaleString("zh-HK",
+    {month:"long",day:"numeric",hour:"2-digit",minute:"2-digit",hour12:false});
+  render();
+  document.getElementById("foot").innerHTML=
+    `判定方式：頁面上「目標學年」緊挨著「中一」與招生字眼才視為開放。`+
+    `已 Drop 或人工標為開放的學校會退出每日檢查。<br>`+
+    `學費為 2025/26 年度數字。報名詳情一律以學校官方公布為準。`;
+}).catch(e=>{
+  document.getElementById("banner").innerHTML=
+    `<div class="banner">${location.protocol==="file:"
+      ? "以本機檔案開啟，瀏覽器不允許讀取 <code>data/status.json</code>，故只顯示學校名單。"
+      : `讀不到 <code>data/status.json</code>（${e.message}）。到 Actions 手動執行一次即可產生。`}</div>`;
+  rows=SEED.map(s=>({...s}));
+  render();
+});
 </script>
 </body>
 </html>

@@ -28,6 +28,7 @@ from bs4 import BeautifulSoup
 ROOT = Path(__file__).parent
 DATA = ROOT / "data"
 STATUS_FILE = DATA / "status.json"
+OVERRIDE_FILE = DATA / "overrides.json"
 DISCOVERED_FILE = DATA / "discovered.json"
 HKT = timezone(timedelta(hours=8))
 
@@ -286,6 +287,35 @@ def check_school(school: dict, cfg: dict, fetcher: Fetcher,
                    candidates=followed or candidates)
 
 
+
+# ---------------------------------------------------------------- overrides
+
+def load_overrides() -> dict:
+    """
+    網頁寫回的人工設定。結構：
+        { "協恩中學": {"status":"open|closed|auto",
+                       "progress":"not_started|in_progress|applied|drop",
+                       "date":"自由文字"} }
+    人工永遠優先於爬蟲。
+    """
+    if not OVERRIDE_FILE.exists():
+        return {}
+    try:
+        return json.loads(OVERRIDE_FILE.read_text(encoding="utf-8")) or {}
+    except Exception as exc:
+        print(f"overrides.json 讀取失敗，忽略：{exc}")
+        return {}
+
+
+def should_skip(ov: dict) -> str | None:
+    """回傳跳過原因，None 代表要照常檢查。"""
+    if ov.get("progress") == "drop":
+        return "已 drop"
+    if ov.get("status") == "open":
+        return "已人工標為開放"
+    return None
+
+
 # ---------------------------------------------------------------- notify
 
 def notify(newly_open: list[dict], label: str) -> None:
@@ -330,17 +360,34 @@ def main() -> int:
         except Exception:
             pass
 
+    overrides = load_overrides()
     fetcher = Fetcher(cfg)
     results, newly_open, new_cache = [], [], {}
 
-    print(f"檢查 {len(schools)} 間學校，目標學年 {cfg['target_label']}\n")
+    active = [s for s in schools if not should_skip(overrides.get(s["name"], {}))]
+    print(f"共 {len(schools)} 間，本次檢查 {len(active)} 間"
+          f"（{len(schools) - len(active)} 間已 drop 或已人工標為開放）"
+          f"，目標學年 {cfg['target_label']}\n")
 
     for school in schools:
-        v = check_school(school, cfg, fetcher, cache.get(school["name"]))
-        if v.candidates:
-            new_cache[school["name"]] = v.candidates
-
+        ov = overrides.get(school["name"], {})
         prev = previous.get(school["name"], {})
+        skip = should_skip(ov)
+
+        if skip:
+            # 不抓取、不通知，狀態沿用上次結果
+            print(f"  {school['name']}  — 跳過（{skip}）")
+            v = Verdict(prev.get("status") or CLOSED,
+                        evidence=prev.get("evidence", ""),
+                        source=prev.get("source", ""),
+                        pages_checked=0)
+            if school["name"] in cache:
+                new_cache[school["name"]] = cache[school["name"]]
+        else:
+            v = check_school(school, cfg, fetcher, cache.get(school["name"]))
+            if v.candidates:
+                new_cache[school["name"]] = v.candidates
+
         was_open = prev.get("status") == OPEN
         opened_at = prev.get("opened_at")
         if v.status == OPEN and not was_open:
@@ -363,8 +410,8 @@ def main() -> int:
         }
         results.append(row)
 
-        # 只在「首次」轉為開放時通知，避免每天重複騷擾
-        if v.status == OPEN and not was_open:
+        # 只在「首次」轉為開放時通知；已 drop / 已人工標開放的不推
+        if v.status == OPEN and not was_open and not skip:
             newly_open.append(row)
 
     order = {OPEN: 0, MANUAL: 1, CLOSED: 2}
