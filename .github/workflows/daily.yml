@@ -1,0 +1,42 @@
+name: 每日檢查招生狀態
+
+on:
+  schedule:
+    # UTC 23:00 = 香港時間翌日 07:00
+    - cron: "0 23 * * *"
+  workflow_dispatch:        # 也可在 Actions 頁面手動觸發
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dss-watch
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 安裝依賴
+        run: pip install requests beautifulsoup4 pyyaml
+
+      - name: 執行檢查
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: python check.py
+
+      - name: 提交結果
+        run: |
+          git config user.name  "dss-watch"
+          git config user.email "actions@github.com"
+          git add data/
+          git diff --staged --quiet || git commit -m "狀態更新 $(TZ=Asia/Hong_Kong date '+%Y-%m-%d')"
+          git push
