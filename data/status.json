@@ -1,12 +1,42 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-08-29T16:20:40+08:00",
+  "updated_at": "2026-08-29T16:38:22+08:00",
   "counts": {
-    "open": 0,
-    "closed": 19,
-    "manual": 0
+    "open": 1,
+    "closed": 17,
+    "manual": 1
   },
   "schools": [
+    {
+      "name": "保良局顏寶鈴書院",
+      "district": "九龍城",
+      "band": "1B",
+      "gender": "男女",
+      "fee": "$35,200",
+      "curriculum": "DSE ＋ IBDP",
+      "status": "open",
+      "source": "https://www.npl.edu.hk/en/site/view?name=F.1+Admission",
+      "home": "https://www.npl.edu.hk/",
+      "evidence": "2027 – 2028 + Form 1 + admission — …sion school achievement 2025 – 2026 & form 1 admission 2027 – 2028 with the continuous support of parents/guardians and the concerted effort of student…",
+      "last_open": "11-17",
+      "opened_at": "2026-08-29",
+      "pages_checked": 4
+    },
+    {
+      "name": "協恩中學",
+      "district": "九龍城",
+      "band": "1A",
+      "gender": "女校",
+      "fee": "$43,748",
+      "curriculum": "DSE",
+      "status": "manual",
+      "source": "https://www.hys.edu.hk/",
+      "home": "https://www.hys.edu.hk/",
+      "evidence": "網站抓取失敗，請自行查看",
+      "last_open": "10-11",
+      "opened_at": null,
+      "pages_checked": 0
+    },
     {
       "name": "優才（楊殷有娣）書院",
       "district": "西貢區",
@@ -20,7 +50,7 @@
       "evidence": "",
       "last_open": "09-22",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 4
     },
     {
       "name": "拔萃女書院",
@@ -35,7 +65,7 @@
       "evidence": "",
       "last_open": "09-29",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 1
     },
     {
       "name": "滙基書院（東九龍）",
@@ -65,7 +95,7 @@
       "evidence": "",
       "last_open": "09-29",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 5
     },
     {
       "name": "保良局羅氏基金中學",
@@ -80,7 +110,7 @@
       "evidence": "",
       "last_open": "09-29",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 4
     },
     {
       "name": "聖士提反書院",
@@ -95,7 +125,7 @@
       "evidence": "",
       "last_open": "10-04",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 5
     },
     {
       "name": "德望學校",
@@ -110,7 +140,7 @@
       "evidence": "",
       "last_open": "10-06",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 1
     },
     {
       "name": "中華基金中學",
@@ -125,22 +155,7 @@
       "evidence": "",
       "last_open": "10-06",
       "opened_at": null,
-      "pages_checked": 3
-    },
-    {
-      "name": "協恩中學",
-      "district": "九龍城",
-      "band": "1A",
-      "gender": "女校",
-      "fee": "$43,748",
-      "curriculum": "DSE",
-      "status": "closed",
-      "source": "https://www.hys.edu.hk/",
-      "home": "https://www.hys.edu.hk/",
-      "evidence": "",
-      "last_open": "10-11",
-      "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 4
     },
     {
       "name": "香港神託會培基書院",
@@ -155,7 +170,7 @@
       "evidence": "",
       "last_open": "10-20",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 2
     },
     {
       "name": "聖保羅男女中學",
@@ -200,7 +215,7 @@
       "evidence": "",
       "last_open": "11-01",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 5
     },
     {
       "name": "香港管理專業協會李國寶中學",
@@ -215,7 +230,7 @@
       "evidence": "",
       "last_open": "11-02",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 5
     },
     {
       "name": "浸大附屬學校王錦輝中小學",
@@ -230,7 +245,7 @@
       "evidence": "",
       "last_open": "11-08",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 5
     },
     {
       "name": "港大同學會書院",
@@ -245,22 +260,7 @@
       "evidence": "",
       "last_open": "11-12",
       "opened_at": null,
-      "pages_checked": 3
-    },
-    {
-      "name": "保良局顏寶鈴書院",
-      "district": "九龍城",
-      "band": "1B",
-      "gender": "男女",
-      "fee": "$35,200",
-      "curriculum": "DSE ＋ IBDP",
-      "status": "closed",
-      "source": "https://www.npl.edu.hk/",
-      "home": "https://www.npl.edu.hk/",
-      "evidence": "",
-      "last_open": "11-17",
-      "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 5
     },
     {
       "name": "培僑書院",
@@ -275,7 +275,7 @@
       "evidence": "",
       "last_open": "11-25",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 1
     },
     {
       "name": "聖保祿學校",
@@ -290,7 +290,7 @@
       "evidence": "",
       "last_open": "待確認",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 1
     }
   ]
 }
