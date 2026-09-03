@@ -1,12 +1,27 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-09-02T08:39:37+08:00",
+  "updated_at": "2026-09-03T08:49:43+08:00",
   "counts": {
-    "open": 1,
-    "closed": 17,
+    "open": 2,
+    "closed": 16,
     "manual": 1
   },
   "schools": [
+    {
+      "name": "香港管理專業協會李國寶中學",
+      "district": "油尖旺",
+      "band": "1B",
+      "gender": "男女",
+      "fee": "$39,780",
+      "curriculum": "DSE",
+      "status": "open",
+      "source": "https://www.hkmadavidli.edu.hk/admission/s1_admission/",
+      "home": "https://www.hkmadavidli.edu.hk/",
+      "evidence": "2027/28 + S1 + admission — …ses english as the medium of instruction. s1 admission 2027/28 application periods & interview arrangement (stage 1) applications should be submitt…",
+      "last_open": "11-02",
+      "opened_at": "2026-09-03",
+      "pages_checked": 2
+    },
     {
       "name": "保良局顏寶鈴書院",
       "district": "九龍城",
@@ -20,7 +35,7 @@
       "evidence": "2027 – 2028 + Form 1 + admission — …sion school achievement 2025 – 2026 & form 1 admission 2027 – 2028 with the continuous support of parents/guardians and the concerted effort of student…",
       "last_open": "11-17",
       "opened_at": "2026-08-29",
-      "pages_checked": 4
+      "pages_checked": 2
     },
     {
       "name": "協恩中學",
@@ -214,21 +229,6 @@
       "home": "https://www.ttca.edu.hk/",
       "evidence": "",
       "last_open": "11-01",
-      "opened_at": null,
-      "pages_checked": 5
-    },
-    {
-      "name": "香港管理專業協會李國寶中學",
-      "district": "油尖旺",
-      "band": "1B",
-      "gender": "男女",
-      "fee": "$39,780",
-      "curriculum": "DSE",
-      "status": "closed",
-      "source": "https://www.hkmadavidli.edu.hk/",
-      "home": "https://www.hkmadavidli.edu.hk/",
-      "evidence": "",
-      "last_open": "11-02",
       "opened_at": null,
       "pages_checked": 5
     },
