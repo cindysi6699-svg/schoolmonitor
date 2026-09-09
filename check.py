@@ -351,7 +351,7 @@ def build_digest(payload: dict, newly_open: list[dict], recheck: list[dict],
     soon_days = cfg.get("deadline_notice_days", 7)
     urgent_days = cfg.get("deadline_urgent_days", 3)
 
-    ending, todo = [], []
+    ending, todo, upcoming, starts_today = [], [], [], []
     for s in payload["schools"]:
         ov = overrides.get(s["name"], {})
         if ov.get("dropped") or ov.get("progress") == "drop":
@@ -363,7 +363,17 @@ def build_digest(payload: dict, newly_open: list[dict], recheck: list[dict],
             continue
 
         prog = ov.get("progress", "not_started")
+        start = ov.get("date_start", "")
         end = ov.get("date_end", "")
+        ds = _days_until(start) if start else None
+
+        # 學校只是公布了安排，報名還沒開始 —— 這段期間不該催你申請，
+        # 否則等到真的能報名那天，日報和前一天沒有分別。
+        if ds is not None and ds > 0:
+            upcoming.append((ds, s["name"], start))
+            continue
+        if ds == 0:
+            starts_today.append(s)
 
         # 即將截止：已申請的不再催
         if end and prog != "applied":
@@ -372,18 +382,22 @@ def build_digest(payload: dict, newly_open: list[dict], recheck: list[dict],
                 ending.append((d, s["name"], end))
 
         # 待辦。已列在「即將截止」的就不再重複，那邊已經夠醒目。
-        if not end:
+        if not start and not end:
+            todo.append((s["name"], f"• {s['name']} — 已開放，未填申請日期"))
+        elif not end:
             todo.append((s["name"], f"• {s['name']} — 已開放，未填截止日期"))
         elif prog == "not_started":
-            todo.append((s["name"], f"• {s['name']} — 已開放，尚未開始申請"))
+            todo.append((s["name"], f"• {s['name']} — 可以開始申請了"))
         elif prog == "in_progress":
             todo.append((s["name"], f"• {s['name']} — 申請進行中，記得完成"))
 
     ending.sort()
-    listed = {name for _, name, _ in ending}
+    upcoming.sort()
+    # 同一間學校不在多個區塊重複出現，最醒目的那個留下就好
+    listed = {name for _, name, _ in ending} | {x["name"] for x in starts_today}
     todo = [line for name, line in todo if name not in listed]
     urgent = any(d <= urgent_days for d, _, _ in ending)
-    ping_needed = bool(newly_open or recheck or urgent)
+    ping_needed = bool(newly_open or recheck or urgent or starts_today)
 
     uid = os.environ.get("DISCORD_USER_ID", "").strip()
     L = []
@@ -405,9 +419,18 @@ def build_digest(payload: dict, newly_open: list[dict], recheck: list[dict],
             when = "今天截止" if d == 0 else f"還有 {d} 天（{_fmt_date(end)}截止）"
             L.append(f"• **{name}** — {when}")
 
-    if newly_open:
+    if starts_today:
+        L += ["", "━━ **今日開始接受申請** ━━"]
+        for x in starts_today:
+            end = overrides.get(x["name"], {}).get("date_end", "")
+            tail = f"（{_fmt_date(end)}截止）" if end else ""
+            L.append(f"• **{x['name']}**{tail}\n  {x['source']}")
+
+    started = {x["name"] for x in starts_today}
+    fresh = [x for x in newly_open if x["name"] not in started]
+    if fresh:
         L += ["", "━━ **今日新開放** ━━"]
-        for s in newly_open:
+        for s in fresh:
             where = " · ".join(x for x in (s.get("band"), s.get("district")) if x)
             L.append(f"• **{s['name']}**（{where}）\n  {s['source']}")
 
@@ -415,6 +438,13 @@ def build_digest(payload: dict, newly_open: list[dict], recheck: list[dict],
         L += ["", "━━ **請複核** ━━"]
         for s in recheck:
             L.append(f"• **{s['name']}** — 你標為未開放，但網站內容已變\n  {s['source']}")
+
+    if upcoming:
+        L += ["", "━━ **已公布，尚未開始接受申請** ━━"]
+        for d, name, start in upcoming[:6]:
+            L.append(f"• {name} — {_fmt_date(start)}開始，還有 {d} 天")
+        if len(upcoming) > 6:
+            L.append(f"…另有 {len(upcoming) - 6} 間")
 
     if todo:
         L += ["", "━━ **待辦** ━━"] + todo[:8]

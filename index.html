@@ -58,6 +58,7 @@ select:focus-visible,input.dt:focus-visible{outline:2px solid var(--chop);outlin
 input.dt{width:9.2rem;font-family:"Archivo Narrow",sans-serif;
   font-variant-numeric:tabular-nums}
 input.dt:disabled{opacity:.35}
+input.dt.bad{border-color:var(--chop);color:var(--chop)}
 input.dt::placeholder{color:var(--faint)}
 select.ov-open{color:var(--chop);border-color:var(--chop);font-weight:500}
 select.ov-closed{color:var(--muted)}
@@ -425,6 +426,51 @@ function isManualSet(r){
   return !!(o && o.status && o.status!=="auto");
 }
 
+
+/* ---------------- 日期：顯示年月日，錄入從寬 ---------------- */
+function fmtCN(iso){
+  if(!iso) return "";
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+  return m ? `${m[1]}年${+m[2]}月${+m[3]}日` : iso;
+}
+
+/* 接受 2026年11月1日 / 2026-11-1 / 2026/11/01 / 20261101 / 11月1日 / 11-1
+   只給月日時推最接近的一次招生季（8月起算今年，否則明年）。 */
+function parseCN(txt){
+  if(!txt) return "";
+  const s = txt.trim()
+    .replace(/[／\/．.]/g,"-").replace(/年|月/g,"-").replace(/日/g,"")
+    .replace(/\s+/g,"").replace(/-+$/,"");
+  let y,mo,d;
+  let m = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(s);
+  if(m){ [ ,y,mo,d] = m; }
+  else if((m = /^(\d{4})(\d{2})(\d{2})$/.exec(s))){ [ ,y,mo,d] = m; }
+  else if((m = /^(\d{1,2})-(\d{1,2})$/.exec(s))){
+    [ ,mo,d] = m;
+    const now = new Date();
+    y = (+mo >= 8) ? now.getFullYear() : now.getFullYear() + 1;
+  } else return "";
+
+  y=+y; mo=+mo; d=+d;
+  if(mo<1||mo>12||d<1||d>31) return "";
+  const dt = new Date(y, mo-1, d);
+  if(dt.getFullYear()!==y || dt.getMonth()!==mo-1 || dt.getDate()!==d) return "";
+  return `${y}-${String(mo).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+}
+
+/* 開始日期還沒到 = 學校只是公布了安排，還不能報名 */
+function daysUntil(iso){
+  if(!iso) return null;
+  const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso); if(!m) return null;
+  const t=new Date(); t.setHours(0,0,0,0);
+  return Math.round((new Date(+m[1],+m[2]-1,+m[3]) - t)/86400000);
+}
+function phaseOf(r){
+  if(effective(r)!==OPEN) return null;
+  const d = daysUntil((overrides[r.name]||{}).date_start);
+  return (d!==null && d>0) ? "announced" : "open";
+}
+
 /* ---------------- 渲染 ---------------- */
 function sel(cls, opts, val, onChange, lockedSet){
   const s=document.createElement("select");
@@ -478,8 +524,10 @@ function render(){
     const cls = o.status==="open" ? "ov-open"
               : o.status==="closed" ? "ov-closed"
               : (eff===OPEN ? "auto-open" : "");
-    const label = OVS.map(([v,t])=>
-      v==="auto" ? [v, eff===OPEN?"自動：已開放":eff===MANUAL?"自動：待確認":"自動：未開放"] : [v,t]);
+    const ph = phaseOf(r);
+    const autoLabel = eff===OPEN ? (ph==="announced" ? "自動：已公布" : "自動：開放中")
+                    : eff===MANUAL ? "自動：待確認" : "自動：未開放";
+    const label = OVS.map(([v,t])=> v==="auto" ? [v, autoLabel] : [v,t]);
     tdS.appendChild(sel(cls, label, o.status||"auto", v=>{
       o.status=v;
       // 記下你按下時程式看到的證據；之後證據一變就提醒複核
@@ -502,18 +550,30 @@ function render(){
     tdP.appendChild(ps);
     tr.appendChild(tdP);
 
-    // 申請起訖日期（自行維護，開放後才能填）
-    for(const f of [["start","date_start"],["end","date_end"]]){
+    // 申請起訖日期。原生 date 輸入框的顯示格式由瀏覽器語系決定，
+    // 改不成年月日，所以用文字框自行控制顯示與解析。
+    for(const f of [["start","date_start","申請開始日期"],
+                    ["end","date_end","申請截止日期"]]){
       const td=document.createElement("td"); td.dataset.c="d-"+f[0];
       const inp=document.createElement("input");
-      inp.className="dt"; inp.type="date"; inp.value=o[f[1]]||"";
+      inp.className="dt"; inp.type="text";
+      inp.value = fmtCN(o[f[1]]||"");
       inp.disabled = eff!==OPEN;
-      inp.title = eff===OPEN
-        ? (f[0]==="start" ? "申請開始日期" : "申請截止日期")
-        : "開放後才能填寫";
-      inp.setAttribute("aria-label",
-        r.name+(f[0]==="start" ? " 申請開始日期" : " 申請截止日期"));
-      inp.addEventListener("change",()=>{ o[f[1]]=inp.value; commit(); });
+      inp.placeholder = eff===OPEN ? "2026年11月1日" : "";
+      inp.title = eff===OPEN ? f[2]+"（可打 11/1 或 2026-11-1）" : "開放後才能填寫";
+      inp.setAttribute("aria-label", r.name+" "+f[2]);
+      inp.addEventListener("change",()=>{
+        const iso = parseCN(inp.value);
+        if(inp.value.trim() && !iso){        // 看不懂就退回原值，不靜默丟失
+          inp.value = fmtCN(o[f[1]]||"");
+          inp.classList.add("bad");
+          setTimeout(()=>inp.classList.remove("bad"), 1200);
+          return;
+        }
+        o[f[1]] = iso;
+        inp.value = fmtCN(iso);
+        commit();
+      });
       td.appendChild(inp);
       tr.appendChild(td);
     }
