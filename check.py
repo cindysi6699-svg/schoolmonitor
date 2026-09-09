@@ -322,57 +322,138 @@ def should_skip(ov: dict) -> str | None:
 
 # ---------------------------------------------------------------- notify
 
-def notify(payload: dict, newly_open: list[dict], recheck: list[dict],
-           dropped: int, cfg: dict) -> None:
-    """
-    每天發一條彙總，不論有沒有變化 —— 沉默容易讓人懷疑程式是不是掛了。
+def _days_until(iso: str) -> int | None:
+    """距離某日還有幾天。今天 = 0，已過 = 負數。"""
+    try:
+        d = datetime.strptime(iso, "%Y-%m-%d").date()
+    except Exception:
+        return None
+    return (d - datetime.now(HKT).date()).days
 
-    但 @提及只留給真正的變化。天天 @ 的話，等到學校真的開放那天，
-    那一聲提示已經和背景雜訊沒有分別了。
+
+def _fmt_date(iso: str) -> str:
+    try:
+        d = datetime.strptime(iso, "%Y-%m-%d")
+        return f"{d.month}月{d.day}日"
+    except Exception:
+        return iso
+
+
+def build_digest(payload: dict, newly_open: list[dict], recheck: list[dict],
+                 overrides: dict, dropped: int, cfg: dict) -> tuple[str, bool]:
+    """
+    組出日報，回傳 (內容, 是否該 @你)。
+
+    版面按緊急度排：截止在最前，因為手機通知只看得到頭幾行，
+    「還有 2 天截止」比「又開放了一間」更需要立刻看到。
+    """
+    c = payload["counts"]
+    soon_days = cfg.get("deadline_notice_days", 7)
+    urgent_days = cfg.get("deadline_urgent_days", 3)
+
+    ending, todo = [], []
+    for s in payload["schools"]:
+        ov = overrides.get(s["name"], {})
+        if ov.get("dropped") or ov.get("progress") == "drop":
+            continue
+
+        # 有效狀態：人工優先
+        eff = ov["status"] if ov.get("status") in (OPEN, CLOSED) else s["status"]
+        if eff != OPEN:
+            continue
+
+        prog = ov.get("progress", "not_started")
+        end = ov.get("date_end", "")
+
+        # 即將截止：已申請的不再催
+        if end and prog != "applied":
+            d = _days_until(end)
+            if d is not None and 0 <= d <= soon_days:
+                ending.append((d, s["name"], end))
+
+        # 待辦。已列在「即將截止」的就不再重複，那邊已經夠醒目。
+        if not end:
+            todo.append((s["name"], f"• {s['name']} — 已開放，未填截止日期"))
+        elif prog == "not_started":
+            todo.append((s["name"], f"• {s['name']} — 已開放，尚未開始申請"))
+        elif prog == "in_progress":
+            todo.append((s["name"], f"• {s['name']} — 申請進行中，記得完成"))
+
+    ending.sort()
+    listed = {name for _, name, _ in ending}
+    todo = [line for name, line in todo if name not in listed]
+    urgent = any(d <= urgent_days for d, _, _ in ending)
+    ping_needed = bool(newly_open or recheck or urgent)
+
+    uid = os.environ.get("DISCORD_USER_ID", "").strip()
+    L = []
+    if uid and ping_needed:
+        L += [f"<@{uid}>", ""]
+
+    today = datetime.now(HKT).strftime("%-m月%-d日")
+    L.append(f"**{cfg['target_label']} 中一招生日報** · {today}")
+    tally = [f"**{c['open']}** 已開放", f"**{c['closed']}** 尚未開放"]
+    if c["manual"]:
+        tally.append(f"**{c['manual']}** 待確認")
+    if dropped:
+        tally.append(f"{dropped} 已 Drop")
+    L.append(" · ".join(tally))
+
+    if ending:
+        L += ["", "━━ **即將截止** ━━"]
+        for d, name, end in ending:
+            when = "今天截止" if d == 0 else f"還有 {d} 天（{_fmt_date(end)}截止）"
+            L.append(f"• **{name}** — {when}")
+
+    if newly_open:
+        L += ["", "━━ **今日新開放** ━━"]
+        for s in newly_open:
+            where = " · ".join(x for x in (s.get("band"), s.get("district")) if x)
+            L.append(f"• **{s['name']}**（{where}）\n  {s['source']}")
+
+    if recheck:
+        L += ["", "━━ **請複核** ━━"]
+        for s in recheck:
+            L.append(f"• **{s['name']}** — 你標為未開放，但網站內容已變\n  {s['source']}")
+
+    if todo:
+        L += ["", "━━ **待辦** ━━"] + todo[:8]
+        if len(todo) > 8:
+            L.append(f"…另有 {len(todo) - 8} 間，詳見網頁")
+
+    manual = [s["name"] for s in payload["schools"] if s["status"] == "manual"]
+    if manual:
+        more = f" 等 {len(manual)} 間" if len(manual) > 6 else ""
+        L += ["", f"讀不到的學校：{'、'.join(manual[:6])}{more}"]
+
+    site = cfg.get("site_url", "").strip()
+    if site:
+        L += ["", site]
+
+    return "\n".join(L), ping_needed
+
+
+def notify(payload: dict, newly_open: list[dict], recheck: list[dict],
+           overrides: dict, dropped: int, cfg: dict) -> None:
+    """
+    每天發一條彙總，不論有沒有變化 —— 沉默容易讓人以為程式還在跑，
+    其實已經掛了好幾天。
+
+    但 @提及只留給三件事：今日新開放、三天內截止、需要複核。
+    旺季時若天天 @，真正要緊那天你已經麻木了。
     """
     hook = os.environ.get("DISCORD_WEBHOOK", "").strip()
     if not hook:
         print("DISCORD_WEBHOOK 未設定，略過通知")
         return
 
-    c = payload["counts"]
-    today = datetime.now(HKT).strftime("%-m月%-d日")
-    uid = os.environ.get("DISCORD_USER_ID", "").strip()
-    ping = f"<@{uid}>\n" if (uid and (newly_open or recheck)) else ""
-
-    lines = [f"{ping}**{cfg['target_label']} 中一招生日報** · {today}"]
-    tally = [f"**{c['open']}** 已開放", f"**{c['closed']}** 尚未開放"]
-    if c["manual"]:
-        tally.append(f"**{c['manual']}** 需人工確認")
-    if dropped:
-        tally.append(f"{dropped} 已 Drop")
-    lines.append(" · ".join(tally))
-
-    if newly_open:
-        lines += ["", "**今日新開放**"]
-        for s in newly_open:
-            lines.append(f"• **{s['name']}**（{s['band']}）\n  {s['source']}")
-        lines.append("截止日期與所需文件請自行到校網確認。")
-
-    if recheck:
-        lines += ["", "**你標為未開放，但網站內容已變，請複核**"]
-        for s in recheck:
-            lines.append(f"• **{s['name']}**（{s['band']}）\n  {s['source']}")
-
-    manual = [s for s in payload["schools"] if s["status"] == "manual"]
-    if manual:
-        names = "、".join(s["name"] for s in manual[:6])
-        more = f" 等 {len(manual)} 間" if len(manual) > 6 else ""
-        lines += ["", f"讀不到的學校：{names}{more}"]
-
-    site = cfg.get("site_url", "").strip()
-    if site:
-        lines += ["", site]
-
+    content, pinged = build_digest(payload, newly_open, recheck,
+                                   overrides, dropped, cfg)
     try:
-        r = requests.post(hook, json={"content": "\n".join(lines)}, timeout=15)
+        r = requests.post(hook, json={"content": content}, timeout=15)
         r.raise_for_status()
-        print(f"已推送日報（新開放 {len(newly_open)}，待複核 {len(recheck)}）")
+        print(f"已推送日報（新開放 {len(newly_open)}，待複核 {len(recheck)}，"
+              f"{'有' if pinged else '無'}提及）")
     except Exception as exc:
         print(f"Discord 推送失敗：{exc}")
 
@@ -480,7 +561,8 @@ def main() -> int:
     c = payload["counts"]
     print(f"\n開放 {c['open']} ／ 未開放 {c['closed']} ／ 待人工確認 {c['manual']}")
 
-    notify(payload, newly_open, recheck, len(schools) - len(active), cfg)
+    notify(payload, newly_open, recheck, overrides,
+           len(schools) - len(active), cfg)
     return 0
 
 

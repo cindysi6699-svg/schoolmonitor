@@ -2,6 +2,10 @@
 
 target_label: "2027/28"
 
+# 截止提醒：soon 天內列入「即將截止」，urgent 天內額外 @你
+deadline_notice_days: 7
+deadline_urgent_days: 3
+
 # 日報結尾附上的網址，留空則不附
 site_url: "https://cindysi6699-svg.github.io/schoolmonitor/"
 
