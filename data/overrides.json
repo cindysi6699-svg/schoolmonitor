@@ -58,7 +58,8 @@
   "香港管理專業協會李國寶中學": {
     "status": "auto",
     "progress": "not_started",
-    "date_start": "2026-11-01"
+    "date_start": "2026-11-01",
+    "date_end": "2026-12-01"
   },
   "浸大附屬學校王錦輝中小學": {
     "status": "auto",
