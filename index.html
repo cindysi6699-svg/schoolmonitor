@@ -55,7 +55,9 @@ select,input.dt{font-family:"Noto Sans TC",sans-serif;font-size:.8rem;
   color:var(--ink);background:var(--card);border:1px solid var(--rule);
   border-radius:3px;padding:.28rem .4rem;max-width:100%}
 select:focus-visible,input.dt:focus-visible{outline:2px solid var(--chop);outline-offset:1px}
-input.dt{width:8.5rem}
+input.dt{width:9.2rem;font-family:"Archivo Narrow",sans-serif;
+  font-variant-numeric:tabular-nums}
+input.dt:disabled{opacity:.35}
 input.dt::placeholder{color:var(--faint)}
 select.ov-open{color:var(--chop);border-color:var(--chop);font-weight:500}
 select.ov-closed{color:var(--muted)}
@@ -117,8 +119,11 @@ footer{margin-top:2rem;padding-top:1.1rem;border-top:1px solid var(--rule);
   td[data-c="district"]::after,td[data-c="gender"]::after,
   td[data-c="band"]::after,td[data-c="fee"]::after{content:" · ";color:var(--rule)}
   td[data-c="cur"]{display:block;margin-top:.2rem;font-size:.8rem}
-  td[data-c="status"],td[data-c="prog"],td[data-c="date"]{
+  td[data-c="status"],td[data-c="prog"],
+  td[data-c="d-start"],td[data-c="d-end"]{
     display:inline-block;margin:.5rem .5rem 0 0}
+  td[data-c="d-start"]::before{content:"開始 ";font-size:.72rem;color:var(--muted)}
+  td[data-c="d-end"]::before{content:"截止 ";font-size:.72rem;color:var(--muted)}
   td[data-c="drop"]{display:inline-block;margin-top:.5rem;text-align:left}
   button.drop,button.undrop{opacity:1}
 }
@@ -138,7 +143,7 @@ footer{margin-top:2rem;padding-top:1.1rem;border-top:1px solid var(--rule);
     <thead><tr>
       <th>學校</th><th>區域</th><th>Band</th><th>男女校</th>
       <th class="num">全年學費</th><th>課程類型</th>
-      <th>開放狀態</th><th>申請進度</th><th>日期備註</th><th></th>
+      <th>開放狀態</th><th>申請進度</th><th>開始日期</th><th>截止日期</th><th></th>
     </tr></thead>
     <tbody id="tb"></tbody>
   </table>
@@ -383,7 +388,8 @@ function saveLocal(){
 }
 function ovOf(name){
   return overrides[name] ||
-    (overrides[name]={status:"auto",progress:"not_started",dropped:false,date:""});
+    (overrides[name]={status:"auto",progress:"not_started",dropped:false,
+                      date_start:"",date_end:""});
 }
 
 /* 舊資料遷移：progress:"drop" → dropped:true */
@@ -392,6 +398,11 @@ function migrate(){
   for(const o of Object.values(overrides)){
     if(o && o.progress==="drop"){
       o.dropped=true; o.progress="not_started"; changed=true;
+    }
+    // 舊的自由文字日期欄：像 ISO 日期就搬進截止日，否則丟棄
+    if(o && typeof o.date==="string"){
+      if(/^\d{4}-\d{2}-\d{2}$/.test(o.date)) o.date_end=o.date;
+      delete o.date; changed=true;
     }
   }
   return changed;
@@ -491,15 +502,21 @@ function render(){
     tdP.appendChild(ps);
     tr.appendChild(tdP);
 
-    // 日期備註（自行維護）
-    const tdD=document.createElement("td"); tdD.dataset.c="date";
-    const inp=document.createElement("input");
-    inp.className="dt"; inp.type="text"; inp.value=o.date||"";
-    inp.placeholder = eff===OPEN ? "截止/面試…" : "開放後可填";
-    inp.disabled = eff!==OPEN;
-    inp.addEventListener("change",()=>{ o.date=inp.value.trim(); commit(); });
-    tdD.appendChild(inp);
-    tr.appendChild(tdD);
+    // 申請起訖日期（自行維護，開放後才能填）
+    for(const f of [["start","date_start"],["end","date_end"]]){
+      const td=document.createElement("td"); td.dataset.c="d-"+f[0];
+      const inp=document.createElement("input");
+      inp.className="dt"; inp.type="date"; inp.value=o[f[1]]||"";
+      inp.disabled = eff!==OPEN;
+      inp.title = eff===OPEN
+        ? (f[0]==="start" ? "申請開始日期" : "申請截止日期")
+        : "開放後才能填寫";
+      inp.setAttribute("aria-label",
+        r.name+(f[0]==="start" ? " 申請開始日期" : " 申請截止日期"));
+      inp.addEventListener("change",()=>{ o[f[1]]=inp.value; commit(); });
+      td.appendChild(inp);
+      tr.appendChild(td);
+    }
 
     // 行末：Drop / 復原。低頻且可逆，故不常駐、不彈確認框。
     const tdX=document.createElement("td"); tdX.dataset.c="drop";

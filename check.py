@@ -296,7 +296,8 @@ def load_overrides() -> dict:
         { "協恩中學": {"status":"open|closed|auto",
                        "progress":"not_started|in_progress|applied",
                        "dropped": true|false,
-                       "date":"自由文字"} }
+                       "date_start":"YYYY-MM-DD",
+                       "date_end":"YYYY-MM-DD"} }
     人工永遠優先於爬蟲。dropped 與 progress 分開：一間已申請的學校
     仍可能被 drop，兩者不該互相覆蓋。
     """
