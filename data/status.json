@@ -1,6 +1,6 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-09-11T08:40:33+08:00",
+  "updated_at": "2026-09-12T08:48:00+08:00",
   "counts": {
     "open": 2,
     "closed": 16,
@@ -95,7 +95,7 @@
       "evidence": "",
       "last_open": "09-29",
       "opened_at": null,
-      "pages_checked": 1
+      "pages_checked": 6
     },
     {
       "name": "福建中學",
