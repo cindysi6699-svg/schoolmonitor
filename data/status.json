@@ -1,12 +1,27 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-09-15T09:04:18+08:00",
+  "updated_at": "2026-09-16T08:54:20+08:00",
   "counts": {
-    "open": 2,
-    "closed": 16,
+    "open": 3,
+    "closed": 15,
     "manual": 1
   },
   "schools": [
+    {
+      "name": "聖士提反書院",
+      "district": "南區",
+      "band": "1B",
+      "gender": "男女",
+      "fee": "$74,550",
+      "curriculum": "DSE ＋ IBDP",
+      "status": "open",
+      "source": "https://www.ssc.edu.hk/",
+      "home": "https://www.ssc.edu.hk/",
+      "evidence": "2027-28 + S1 + application — …n why ssc? s1 entry s1 admission talk and campus tour (2027-28) notes to parents application procedure s2-s5 entry notes to parents application pro…",
+      "last_open": "10-04",
+      "opened_at": "2026-09-16",
+      "pages_checked": 1
+    },
     {
       "name": "香港管理專業協會李國寶中學",
       "district": "油尖旺",
@@ -126,21 +141,6 @@
       "last_open": "09-29",
       "opened_at": null,
       "pages_checked": 4
-    },
-    {
-      "name": "聖士提反書院",
-      "district": "南區",
-      "band": "1B",
-      "gender": "男女",
-      "fee": "$74,550",
-      "curriculum": "DSE ＋ IBDP",
-      "status": "closed",
-      "source": "https://www.ssc.edu.hk/",
-      "home": "https://www.ssc.edu.hk/",
-      "evidence": "",
-      "last_open": "10-04",
-      "opened_at": null,
-      "pages_checked": 2
     },
     {
       "name": "德望學校",
