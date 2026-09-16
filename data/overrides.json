@@ -29,7 +29,8 @@
   },
   "聖士提反書院": {
     "status": "auto",
-    "progress": "not_started"
+    "progress": "not_started",
+    "date_end": "2026-11-30"
   },
   "德望學校": {
     "status": "auto",
