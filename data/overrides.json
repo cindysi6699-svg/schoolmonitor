@@ -1,7 +1,8 @@
 {
   "保良局顏寶鈴書院": {
     "status": "open",
-    "progress": "not_started"
+    "progress": "not_started",
+    "date_start": "2026-11-16"
   },
   "協恩中學": {
     "status": "closed",
