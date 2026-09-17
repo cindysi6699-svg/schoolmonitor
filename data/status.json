@@ -1,6 +1,6 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-09-16T08:54:20+08:00",
+  "updated_at": "2026-09-17T08:58:47+08:00",
   "counts": {
     "open": 3,
     "closed": 15,
@@ -125,7 +125,7 @@
       "evidence": "",
       "last_open": "09-29",
       "opened_at": null,
-      "pages_checked": 5
+      "pages_checked": 4
     },
     {
       "name": "保良局羅氏基金中學",
