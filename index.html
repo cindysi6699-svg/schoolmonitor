@@ -121,8 +121,9 @@ footer{margin-top:2rem;padding-top:1.1rem;border-top:1px solid var(--rule);
   td[data-c="band"]::after,td[data-c="fee"]::after{content:" · ";color:var(--rule)}
   td[data-c="cur"]{display:block;margin-top:.2rem;font-size:.8rem}
   td[data-c="status"],td[data-c="prog"],
-  td[data-c="d-start"],td[data-c="d-end"]{
+  td[data-c="d-open"],td[data-c="d-start"],td[data-c="d-end"]{
     display:inline-block;margin:.5rem .5rem 0 0}
+  td[data-c="d-open"]::before{content:"開放日 ";font-size:.72rem;color:var(--muted)}
   td[data-c="d-start"]::before{content:"開始 ";font-size:.72rem;color:var(--muted)}
   td[data-c="d-end"]::before{content:"截止 ";font-size:.72rem;color:var(--muted)}
   td[data-c="drop"]{display:inline-block;margin-top:.5rem;text-align:left}
@@ -144,7 +145,7 @@ footer{margin-top:2rem;padding-top:1.1rem;border-top:1px solid var(--rule);
     <thead><tr>
       <th>學校</th><th>區域</th><th>Band</th><th>男女校</th>
       <th class="num">全年學費</th><th>課程類型</th>
-      <th>開放狀態</th><th>申請進度</th><th>開始日期</th><th>截止日期</th><th></th>
+      <th>開放狀態</th><th>申請進度</th><th>開放日</th><th>開始日期</th><th>截止日期</th><th></th>
     </tr></thead>
     <tbody id="tb"></tbody>
   </table>
@@ -390,7 +391,7 @@ function saveLocal(){
 function ovOf(name){
   return overrides[name] ||
     (overrides[name]={status:"auto",progress:"not_started",dropped:false,
-                      date_start:"",date_end:""});
+                      date_openday:"",date_start:"",date_end:""});
 }
 
 /* 舊資料遷移：progress:"drop" → dropped:true */
@@ -550,17 +551,22 @@ function render(){
     tdP.appendChild(ps);
     tr.appendChild(tdP);
 
-    // 申請起訖日期。原生 date 輸入框的顯示格式由瀏覽器語系決定，
-    // 改不成年月日，所以用文字框自行控制顯示與解析。
-    for(const f of [["start","date_start","申請開始日期"],
-                    ["end","date_end","申請截止日期"]]){
+    // 日期欄。原生 date 輸入框的顯示格式由瀏覽器語系決定，改不成年月日，
+    // 所以用文字框自行控制顯示與解析。
+    //
+    // 開放日不受申請狀態限制 —— 簡介會往往比入學申請早好幾週，
+    // 若跟著鎖住，真正該填的時候反而填不進去。
+    for(const f of [["open","date_openday","開放日／簡介會",true],
+                    ["start","date_start","申請開始日期",false],
+                    ["end","date_end","申請截止日期",false]]){
+      const editable = f[3] || eff===OPEN;
       const td=document.createElement("td"); td.dataset.c="d-"+f[0];
       const inp=document.createElement("input");
       inp.className="dt"; inp.type="text";
       inp.value = fmtCN(o[f[1]]||"");
-      inp.disabled = eff!==OPEN;
-      inp.placeholder = eff===OPEN ? "2026年11月1日" : "";
-      inp.title = eff===OPEN ? f[2]+"（可打 11/1 或 2026-11-1）" : "開放後才能填寫";
+      inp.disabled = !editable;
+      inp.placeholder = editable ? "2026年11月1日" : "";
+      inp.title = editable ? f[2]+"（可打 11/1 或 2026-11-1）" : "開放後才能填寫";
       inp.setAttribute("aria-label", r.name+" "+f[2]);
       inp.addEventListener("change",()=>{
         const iso = parseCN(inp.value);

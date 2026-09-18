@@ -296,6 +296,7 @@ def load_overrides() -> dict:
         { "協恩中學": {"status":"open|closed|auto",
                        "progress":"not_started|in_progress|applied",
                        "dropped": true|false,
+                       "date_openday":"YYYY-MM-DD",
                        "date_start":"YYYY-MM-DD",
                        "date_end":"YYYY-MM-DD"} }
     人工永遠優先於爬蟲。dropped 與 progress 分開：一間已申請的學校
@@ -351,11 +352,19 @@ def build_digest(payload: dict, newly_open: list[dict], recheck: list[dict],
     soon_days = cfg.get("deadline_notice_days", 7)
     urgent_days = cfg.get("deadline_urgent_days", 3)
 
-    ending, todo, upcoming, starts_today = [], [], [], []
+    ending, todo, upcoming, starts_today, opendays = [], [], [], [], []
     for s in payload["schools"]:
         ov = overrides.get(s["name"], {})
         if ov.get("dropped") or ov.get("progress") == "drop":
             continue
+
+        # 開放日獨立於申請狀態：簡介會常在申請開放前就辦完了。
+        # 只在臨近時才進日報，平時留在網頁上看就好。
+        od = ov.get("date_openday", "")
+        if od:
+            dd = _days_until(od)
+            if dd is not None and 0 <= dd <= soon_days:
+                opendays.append((dd, s["name"], od))
 
         # 有效狀態：人工優先
         eff = ov["status"] if ov.get("status") in (OPEN, CLOSED) else s["status"]
@@ -397,7 +406,8 @@ def build_digest(payload: dict, newly_open: list[dict], recheck: list[dict],
     listed = {name for _, name, _ in ending} | {x["name"] for x in starts_today}
     todo = [line for name, line in todo if name not in listed]
     urgent = any(d <= urgent_days for d, _, _ in ending)
-    ping_needed = bool(newly_open or recheck or urgent or starts_today)
+    od_soon = any(d <= 1 for d, _, _ in opendays)
+    ping_needed = bool(newly_open or recheck or urgent or starts_today or od_soon)
 
     uid = os.environ.get("DISCORD_USER_ID", "").strip()
     L = []
@@ -417,6 +427,13 @@ def build_digest(payload: dict, newly_open: list[dict], recheck: list[dict],
         L += ["", "━━ **即將截止** ━━"]
         for d, name, end in ending:
             when = "今天截止" if d == 0 else f"還有 {d} 天（{_fmt_date(end)}截止）"
+            L.append(f"• **{name}** — {when}")
+
+    if opendays:
+        opendays.sort()
+        L += ["", "━━ **開放日／簡介會** ━━"]
+        for d, name, od in opendays:
+            when = "就是今天" if d == 0 else f"還有 {d} 天（{_fmt_date(od)}）"
             L.append(f"• **{name}** — {when}")
 
     if starts_today:
