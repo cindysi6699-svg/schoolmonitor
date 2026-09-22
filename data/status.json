@@ -1,6 +1,6 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-09-21T08:38:19+08:00",
+  "updated_at": "2026-09-22T09:21:43+08:00",
   "counts": {
     "open": 3,
     "closed": 15,
@@ -80,7 +80,7 @@
       "evidence": "",
       "last_open": "09-22",
       "opened_at": null,
-      "pages_checked": 4
+      "pages_checked": 3
     },
     {
       "name": "拔萃女書院",
@@ -110,7 +110,7 @@
       "evidence": "",
       "last_open": "09-29",
       "opened_at": null,
-      "pages_checked": 6
+      "pages_checked": 5
     },
     {
       "name": "福建中學",
@@ -140,7 +140,7 @@
       "evidence": "",
       "last_open": "09-29",
       "opened_at": null,
-      "pages_checked": 4
+      "pages_checked": 3
     },
     {
       "name": "德望學校",
