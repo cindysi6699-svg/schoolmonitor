@@ -9,7 +9,8 @@
   "協恩中學": {
     "status": "closed",
     "progress": "not_started",
-    "seen_evidence": "網站抓取失敗，請自行查看"
+    "seen_evidence": "網站抓取失敗，請自行查看",
+    "date_openday": "2026-10-10"
   },
   "優才（楊殷有娣）書院": {
     "status": "auto",
