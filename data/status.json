@@ -1,12 +1,27 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-09-22T09:21:43+08:00",
+  "updated_at": "2026-09-23T09:02:02+08:00",
   "counts": {
-    "open": 3,
-    "closed": 15,
+    "open": 4,
+    "closed": 14,
     "manual": 1
   },
   "schools": [
+    {
+      "name": "保良局羅氏基金中學",
+      "district": "西貢區",
+      "band": "1B",
+      "gender": "男女",
+      "fee": "$19,800",
+      "curriculum": "DSE",
+      "status": "open",
+      "source": "https://www.plklfc.edu.hk/",
+      "home": "https://www.plklfc.edu.hk/",
+      "evidence": "2027/28 + Form 1 + application — …cation application for form 1 admission (academic year 2027/28) application form for secondary two to secondary five admission talk and open day sc…",
+      "last_open": "09-29",
+      "opened_at": "2026-09-23",
+      "pages_checked": 1
+    },
     {
       "name": "聖士提反書院",
       "district": "南區",
@@ -126,21 +141,6 @@
       "last_open": "09-29",
       "opened_at": null,
       "pages_checked": 4
-    },
-    {
-      "name": "保良局羅氏基金中學",
-      "district": "西貢區",
-      "band": "1B",
-      "gender": "男女",
-      "fee": "$19,800",
-      "curriculum": "DSE",
-      "status": "closed",
-      "source": "https://www.plklfc.edu.hk/",
-      "home": "https://www.plklfc.edu.hk/",
-      "evidence": "",
-      "last_open": "09-29",
-      "opened_at": null,
-      "pages_checked": 3
     },
     {
       "name": "德望學校",
