@@ -1,6 +1,6 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-09-28T09:17:13+08:00",
+  "updated_at": "2026-09-29T10:23:31+08:00",
   "counts": {
     "open": 4,
     "closed": 14,
@@ -215,7 +215,7 @@
       "evidence": "",
       "last_open": "10-31",
       "opened_at": null,
-      "pages_checked": 3
+      "pages_checked": 2
     },
     {
       "name": "基督教崇真中學",
