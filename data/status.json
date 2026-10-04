@@ -1,10 +1,10 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-10-03T09:32:48+08:00",
+  "updated_at": "2026-10-04T10:13:59+08:00",
   "counts": {
     "open": 4,
-    "closed": 14,
-    "manual": 1
+    "closed": 13,
+    "manual": 2
   },
   "schools": [
     {
@@ -66,6 +66,21 @@
       "last_open": "11-17",
       "opened_at": "2026-08-29",
       "pages_checked": 2
+    },
+    {
+      "name": "德望學校",
+      "district": "黃大仙",
+      "band": "1A",
+      "gender": "女校",
+      "fee": "$36,750",
+      "curriculum": "DSE",
+      "status": "manual",
+      "source": "https://www.ghs.edu.hk/",
+      "home": "https://www.ghs.edu.hk/",
+      "evidence": "網站抓取失敗，請自行查看",
+      "last_open": "10-06",
+      "opened_at": null,
+      "pages_checked": 0
     },
     {
       "name": "協恩中學",
@@ -141,21 +156,6 @@
       "last_open": "09-29",
       "opened_at": null,
       "pages_checked": 4
-    },
-    {
-      "name": "德望學校",
-      "district": "黃大仙",
-      "band": "1A",
-      "gender": "女校",
-      "fee": "$36,750",
-      "curriculum": "DSE",
-      "status": "closed",
-      "source": "https://www2.ghs.edu.hk/landing/admission",
-      "home": "https://www.ghs.edu.hk/",
-      "evidence": "",
-      "last_open": "10-06",
-      "opened_at": null,
-      "pages_checked": 1
     },
     {
       "name": "中華基金中學",
