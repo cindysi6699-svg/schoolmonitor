@@ -1,10 +1,10 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-10-04T10:13:59+08:00",
+  "updated_at": "2026-10-05T09:24:48+08:00",
   "counts": {
     "open": 4,
-    "closed": 13,
-    "manual": 2
+    "closed": 12,
+    "manual": 3
   },
   "schools": [
     {
@@ -68,6 +68,21 @@
       "pages_checked": 2
     },
     {
+      "name": "滙基書院（東九龍）",
+      "district": "觀塘區",
+      "band": "1A",
+      "gender": "男女",
+      "fee": "$29,800",
+      "curriculum": "DSE ＋ IGCSE ＋ IAL",
+      "status": "manual",
+      "source": "https://www.uccke.edu.hk/",
+      "home": "https://www.uccke.edu.hk/",
+      "evidence": "網站抓取失敗，請自行查看",
+      "last_open": "09-29",
+      "opened_at": null,
+      "pages_checked": 0
+    },
+    {
       "name": "德望學校",
       "district": "黃大仙",
       "band": "1A",
@@ -126,21 +141,6 @@
       "last_open": "09-29",
       "opened_at": null,
       "pages_checked": 0
-    },
-    {
-      "name": "滙基書院（東九龍）",
-      "district": "觀塘區",
-      "band": "1A",
-      "gender": "男女",
-      "fee": "$29,800",
-      "curriculum": "DSE ＋ IGCSE ＋ IAL",
-      "status": "closed",
-      "source": "https://www.uccke.edu.hk/admission/",
-      "home": "https://www.uccke.edu.hk/",
-      "evidence": "",
-      "last_open": "09-29",
-      "opened_at": null,
-      "pages_checked": 5
     },
     {
       "name": "福建中學",
