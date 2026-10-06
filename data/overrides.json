@@ -45,7 +45,8 @@
   },
   "德望學校": {
     "status": "auto",
-    "progress": "not_started"
+    "progress": "not_started",
+    "dropped": true
   },
   "中華基金中學": {
     "status": "auto",
