@@ -25,7 +25,8 @@
     "status": "open",
     "progress": "not_started",
     "date_openday": "2026-10-17",
-    "date_start": "2026-10-06"
+    "date_start": "2026-10-06",
+    "date_end": "2027-01-04"
   },
   "福建中學": {
     "status": "auto",
