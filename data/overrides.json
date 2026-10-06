@@ -24,7 +24,8 @@
   "滙基書院（東九龍）": {
     "status": "open",
     "progress": "not_started",
-    "date_openday": "2026-10-17"
+    "date_openday": "2026-10-17",
+    "date_start": "2026-10-06"
   },
   "福建中學": {
     "status": "auto",
