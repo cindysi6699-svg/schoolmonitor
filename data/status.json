@@ -1,9 +1,9 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-10-09T10:38:41+08:00",
+  "updated_at": "2026-10-10T09:59:38+08:00",
   "counts": {
-    "open": 5,
-    "closed": 12,
+    "open": 6,
+    "closed": 11,
     "manual": 2
   },
   "schools": [
@@ -66,6 +66,21 @@
       "last_open": "11-02",
       "opened_at": "2026-09-03",
       "pages_checked": 2
+    },
+    {
+      "name": "港大同學會書院",
+      "district": "南區",
+      "band": "1A",
+      "gender": "男女",
+      "fee": "$46,500",
+      "curriculum": "DSE ＋ IAL",
+      "status": "open",
+      "source": "https://www.hkugac.edu.hk/engage/as-a-student/application-guidelines",
+      "home": "https://www.hkugac.edu.hk/",
+      "evidence": "2027 - 2028 + S1 + admission — …es application guidelines application for s1 admission 2027 - 2028 information on application application period: 13 th november 2026 (10:00) – 14 th d…",
+      "last_open": "11-12",
+      "opened_at": "2026-10-10",
+      "pages_checked": 3
     },
     {
       "name": "保良局顏寶鈴書院",
@@ -244,21 +259,6 @@
       "home": "https://www.hkbuas.edu.hk/",
       "evidence": "",
       "last_open": "11-08",
-      "opened_at": null,
-      "pages_checked": 5
-    },
-    {
-      "name": "港大同學會書院",
-      "district": "南區",
-      "band": "1A",
-      "gender": "男女",
-      "fee": "$46,500",
-      "curriculum": "DSE ＋ IAL",
-      "status": "closed",
-      "source": "https://www.hkugac.edu.hk/",
-      "home": "https://www.hkugac.edu.hk/",
-      "evidence": "",
-      "last_open": "11-12",
       "opened_at": null,
       "pages_checked": 5
     },
