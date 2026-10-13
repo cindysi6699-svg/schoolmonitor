@@ -1,12 +1,27 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-10-12T09:54:54+08:00",
+  "updated_at": "2026-10-13T11:16:31+08:00",
   "counts": {
-    "open": 6,
-    "closed": 11,
-    "manual": 2
+    "open": 7,
+    "closed": 9,
+    "manual": 3
   },
   "schools": [
+    {
+      "name": "福建中學",
+      "district": "觀塘區",
+      "band": "1B",
+      "gender": "男女",
+      "fee": "$24,500",
+      "curriculum": "DSE",
+      "status": "open",
+      "source": "https://www.fms.edu.hk/",
+      "home": "https://www.fms.edu.hk/",
+      "evidence": "2027年9月入學 + 中一 + 入學 — ….hk/upload/fmscms/files/school_documents/優異生入讀中一獎學金計劃 (2027年9月入學)_v3.pdf…",
+      "last_open": "09-29",
+      "opened_at": "2026-10-13",
+      "pages_checked": 1
+    },
     {
       "name": "保良局羅氏基金中學",
       "district": "西貢區",
@@ -128,6 +143,21 @@
       "pages_checked": 0
     },
     {
+      "name": "浸大附屬學校王錦輝中小學",
+      "district": "沙田區",
+      "band": "1C–1B",
+      "gender": "男女",
+      "fee": "$44,800",
+      "curriculum": "DSE ＋ IGCSE ＋ IAL",
+      "status": "manual",
+      "source": "https://www.hkbuas.edu.hk/",
+      "home": "https://www.hkbuas.edu.hk/",
+      "evidence": "網站抓取失敗，請自行查看",
+      "last_open": "11-08",
+      "opened_at": null,
+      "pages_checked": 0
+    },
+    {
       "name": "優才（楊殷有娣）書院",
       "district": "西貢區",
       "band": "1B",
@@ -156,21 +186,6 @@
       "last_open": "09-29",
       "opened_at": null,
       "pages_checked": 0
-    },
-    {
-      "name": "福建中學",
-      "district": "觀塘區",
-      "band": "1B",
-      "gender": "男女",
-      "fee": "$24,500",
-      "curriculum": "DSE",
-      "status": "closed",
-      "source": "https://www.fms.edu.hk/",
-      "home": "https://www.fms.edu.hk/",
-      "evidence": "",
-      "last_open": "09-29",
-      "opened_at": null,
-      "pages_checked": 4
     },
     {
       "name": "中華基金中學",
@@ -244,21 +259,6 @@
       "home": "https://www.ttca.edu.hk/",
       "evidence": "",
       "last_open": "11-01",
-      "opened_at": null,
-      "pages_checked": 5
-    },
-    {
-      "name": "浸大附屬學校王錦輝中小學",
-      "district": "沙田區",
-      "band": "1C–1B",
-      "gender": "男女",
-      "fee": "$44,800",
-      "curriculum": "DSE ＋ IGCSE ＋ IAL",
-      "status": "closed",
-      "source": "https://www.hkbuas.edu.hk/",
-      "home": "https://www.hkbuas.edu.hk/",
-      "evidence": "",
-      "last_open": "11-08",
       "opened_at": null,
       "pages_checked": 5
     },
