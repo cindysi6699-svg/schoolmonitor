@@ -1,10 +1,10 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-10-13T11:16:31+08:00",
+  "updated_at": "2026-10-14T09:29:01+08:00",
   "counts": {
     "open": 7,
-    "closed": 9,
-    "manual": 3
+    "closed": 10,
+    "manual": 2
   },
   "schools": [
     {
@@ -143,21 +143,6 @@
       "pages_checked": 0
     },
     {
-      "name": "浸大附屬學校王錦輝中小學",
-      "district": "沙田區",
-      "band": "1C–1B",
-      "gender": "男女",
-      "fee": "$44,800",
-      "curriculum": "DSE ＋ IGCSE ＋ IAL",
-      "status": "manual",
-      "source": "https://www.hkbuas.edu.hk/",
-      "home": "https://www.hkbuas.edu.hk/",
-      "evidence": "網站抓取失敗，請自行查看",
-      "last_open": "11-08",
-      "opened_at": null,
-      "pages_checked": 0
-    },
-    {
       "name": "優才（楊殷有娣）書院",
       "district": "西貢區",
       "band": "1B",
@@ -261,6 +246,21 @@
       "last_open": "11-01",
       "opened_at": null,
       "pages_checked": 5
+    },
+    {
+      "name": "浸大附屬學校王錦輝中小學",
+      "district": "沙田區",
+      "band": "1C–1B",
+      "gender": "男女",
+      "fee": "$44,800",
+      "curriculum": "DSE ＋ IGCSE ＋ IAL",
+      "status": "closed",
+      "source": "https://www.hkbuas.edu.hk/",
+      "home": "https://www.hkbuas.edu.hk/",
+      "evidence": "",
+      "last_open": "11-08",
+      "opened_at": null,
+      "pages_checked": 6
     },
     {
       "name": "培僑書院",
