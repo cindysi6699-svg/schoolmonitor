@@ -1,10 +1,10 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-10-16T08:54:05+08:00",
+  "updated_at": "2026-10-17T08:53:49+08:00",
   "counts": {
-    "open": 6,
-    "closed": 10,
-    "manual": 3
+    "open": 8,
+    "closed": 9,
+    "manual": 2
   },
   "schools": [
     {
@@ -53,6 +53,21 @@
       "pages_checked": 1
     },
     {
+      "name": "協恩中學",
+      "district": "九龍城",
+      "band": "1A",
+      "gender": "女校",
+      "fee": "$43,748",
+      "curriculum": "DSE",
+      "status": "open",
+      "source": "https://www.hys.edu.hk/",
+      "home": "https://www.hys.edu.hk/",
+      "evidence": "2027-2028 + F.1 + application — …heep yunn school f.1 admission application (2027-2028 intake) opens from 10 th october to 22 nd october, 2026. learn more explore heep yun…",
+      "last_open": "10-11",
+      "opened_at": "2026-10-17",
+      "pages_checked": 1
+    },
+    {
       "name": "聖保羅男女中學",
       "district": "中西區",
       "band": "1A",
@@ -66,6 +81,21 @@
       "last_open": "10-27",
       "opened_at": "2026-10-16",
       "pages_checked": 1
+    },
+    {
+      "name": "香港管理專業協會李國寶中學",
+      "district": "油尖旺",
+      "band": "1B",
+      "gender": "男女",
+      "fee": "$39,780",
+      "curriculum": "DSE",
+      "status": "open",
+      "source": "https://www.hkmadavidli.edu.hk/admission/s1_admission/",
+      "home": "https://www.hkmadavidli.edu.hk/",
+      "evidence": "2027/28 + S1 + admission — …ses english as the medium of instruction. s1 admission 2027/28 application periods & interview arrangement (stage 1) applications should be submitt…",
+      "last_open": "11-02",
+      "opened_at": "2026-10-17",
+      "pages_checked": 2
     },
     {
       "name": "港大同學會書院",
@@ -98,21 +128,6 @@
       "pages_checked": 2
     },
     {
-      "name": "優才（楊殷有娣）書院",
-      "district": "西貢區",
-      "band": "1B",
-      "gender": "男女",
-      "fee": "$39,600",
-      "curriculum": "DSE ＋ IBDP",
-      "status": "manual",
-      "source": "https://www.gtcollege.edu.hk/",
-      "home": "https://www.gtcollege.edu.hk/",
-      "evidence": "網站抓取失敗，請自行查看",
-      "last_open": "09-22",
-      "opened_at": null,
-      "pages_checked": 0
-    },
-    {
       "name": "滙基書院（東九龍）",
       "district": "觀塘區",
       "band": "1A",
@@ -143,6 +158,21 @@
       "pages_checked": 0
     },
     {
+      "name": "優才（楊殷有娣）書院",
+      "district": "西貢區",
+      "band": "1B",
+      "gender": "男女",
+      "fee": "$39,600",
+      "curriculum": "DSE ＋ IBDP",
+      "status": "closed",
+      "source": "https://www.gtcollege.edu.hk/",
+      "home": "https://www.gtcollege.edu.hk/",
+      "evidence": "",
+      "last_open": "09-22",
+      "opened_at": null,
+      "pages_checked": 6
+    },
+    {
       "name": "拔萃女書院",
       "district": "油尖旺",
       "band": "1A",
@@ -171,21 +201,6 @@
       "last_open": "10-06",
       "opened_at": null,
       "pages_checked": 4
-    },
-    {
-      "name": "協恩中學",
-      "district": "九龍城",
-      "band": "1A",
-      "gender": "女校",
-      "fee": "$43,748",
-      "curriculum": "DSE",
-      "status": "closed",
-      "source": "https://www.hys.edu.hk/",
-      "home": "https://www.hys.edu.hk/",
-      "evidence": "",
-      "last_open": "10-11",
-      "opened_at": "2026-10-09",
-      "pages_checked": 1
     },
     {
       "name": "香港神託會培基書院",
@@ -231,21 +246,6 @@
       "last_open": "11-01",
       "opened_at": null,
       "pages_checked": 5
-    },
-    {
-      "name": "香港管理專業協會李國寶中學",
-      "district": "油尖旺",
-      "band": "1B",
-      "gender": "男女",
-      "fee": "$39,780",
-      "curriculum": "DSE",
-      "status": "closed",
-      "source": "https://www.hkmadavidli.edu.hk/",
-      "home": "https://www.hkmadavidli.edu.hk/",
-      "evidence": "",
-      "last_open": "11-02",
-      "opened_at": "2026-09-03",
-      "pages_checked": 2
     },
     {
       "name": "浸大附屬學校王錦輝中小學",
