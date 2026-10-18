@@ -19,7 +19,7 @@
   "拔萃女書院": {
     "status": "auto",
     "progress": "not_started",
-    "dropped": true
+    "dropped": false
   },
   "滙基書院（東九龍）": {
     "status": "open",
