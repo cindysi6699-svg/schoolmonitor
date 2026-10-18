@@ -37,11 +37,12 @@
     "progress": "not_started"
   },
   "聖士提反書院": {
-    "status": "auto",
+    "status": "closed",
     "progress": "not_started",
     "date_end": "2026-11-30",
     "date_start": "2026-10-10",
-    "date_openday": "2026-10-10"
+    "date_openday": "2026-10-10",
+    "seen_evidence": "2027-28 + S1 + application — …n why ssc? s1 entry s1 admission talk and campus tour (2027-28) notes to parents application procedure s2-s5 entry notes to parents application pro…"
   },
   "德望學校": {
     "status": "auto",
