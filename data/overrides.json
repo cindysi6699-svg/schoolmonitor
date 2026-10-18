@@ -60,7 +60,8 @@
   "聖保羅男女中學": {
     "status": "auto",
     "progress": "not_started",
-    "date_start": "2026-10-26"
+    "date_start": "2026-10-26",
+    "date_end": "2026-11-13"
   },
   "香港青年協會李兆基書院": {
     "status": "auto",
