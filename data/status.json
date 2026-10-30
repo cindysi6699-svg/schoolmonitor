@@ -1,9 +1,9 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-10-29T10:01:19+08:00",
+  "updated_at": "2026-10-30T10:14:45+08:00",
   "counts": {
-    "open": 7,
-    "closed": 10,
+    "open": 8,
+    "closed": 9,
     "manual": 2
   },
   "schools": [
@@ -50,6 +50,21 @@
       "evidence": "2027-28 + S1 + application — …n why ssc? s1 entry s1 admission talk and campus tour (2027-28) notes to parents application procedure s2-s5 entry notes to parents application pro…",
       "last_open": "10-04",
       "opened_at": "2026-09-16",
+      "pages_checked": 1
+    },
+    {
+      "name": "香港神託會培基書院",
+      "district": "沙田區",
+      "band": "1C–1B",
+      "gender": "男女",
+      "fee": "$30,900",
+      "curriculum": "DSE ＋ IAL",
+      "status": "open",
+      "source": "https://www.spkc.edu.hk/",
+      "home": "https://www.spkc.edu.hk/",
+      "evidence": "2027/28 + 中一 + application — …2 hostel experience programme s1 admission application 2027/28 中一入學申請 about spkc school life pooikeinians admission spkc diary spkc diary oct 2026…",
+      "last_open": "10-20",
+      "opened_at": "2026-10-30",
       "pages_checked": 1
     },
     {
@@ -201,21 +216,6 @@
       "last_open": "10-11",
       "opened_at": "2026-10-17",
       "pages_checked": 6
-    },
-    {
-      "name": "香港神託會培基書院",
-      "district": "沙田區",
-      "band": "1C–1B",
-      "gender": "男女",
-      "fee": "$30,900",
-      "curriculum": "DSE ＋ IAL",
-      "status": "closed",
-      "source": "https://www.spkc.edu.hk/",
-      "home": "https://www.spkc.edu.hk/",
-      "evidence": "",
-      "last_open": "10-20",
-      "opened_at": null,
-      "pages_checked": 2
     },
     {
       "name": "香港青年協會李兆基書院",
