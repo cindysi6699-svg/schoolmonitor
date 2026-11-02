@@ -1,9 +1,9 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-11-01T09:36:17+08:00",
+  "updated_at": "2026-11-02T09:58:39+08:00",
   "counts": {
-    "open": 7,
-    "closed": 10,
+    "open": 8,
+    "closed": 9,
     "manual": 2
   },
   "schools": [
@@ -83,6 +83,21 @@
       "pages_checked": 1
     },
     {
+      "name": "香港管理專業協會李國寶中學",
+      "district": "油尖旺",
+      "band": "1B",
+      "gender": "男女",
+      "fee": "$39,780",
+      "curriculum": "DSE",
+      "status": "open",
+      "source": "https://www.hkmadavidli.edu.hk/admission/s1_admission/",
+      "home": "https://www.hkmadavidli.edu.hk/",
+      "evidence": "2027/28 + S1 + admission — …ses english as the medium of instruction. s1 admission 2027/28 application periods & interview arrangement (stage 1) applications should be submitt…",
+      "last_open": "11-02",
+      "opened_at": "2026-11-02",
+      "pages_checked": 2
+    },
+    {
       "name": "港大同學會書院",
       "district": "南區",
       "band": "1A",
@@ -92,7 +107,7 @@
       "status": "open",
       "source": "https://www.hkugac.edu.hk/",
       "home": "https://www.hkugac.edu.hk/",
-      "evidence": "2027-2028 + S1 + admission — …ring students for the next decade what's on? read more 2027-2028 s1 admission info day 14 oct 2026 2026 international a-level results 18 sep 2026 jup…",
+      "evidence": "2027-2028 + S1 + admission — …ring students for the next decade what's on? read more 2027-2028 s1 admission info day 02 nov 2026 alumni sign-up for sports day 2026-27 02 nov 2026…",
       "last_open": "11-12",
       "opened_at": "2026-10-10",
       "pages_checked": 1
@@ -231,21 +246,6 @@
       "last_open": "11-01",
       "opened_at": null,
       "pages_checked": 5
-    },
-    {
-      "name": "香港管理專業協會李國寶中學",
-      "district": "油尖旺",
-      "band": "1B",
-      "gender": "男女",
-      "fee": "$39,780",
-      "curriculum": "DSE",
-      "status": "closed",
-      "source": "https://www.hkmadavidli.edu.hk/",
-      "home": "https://www.hkmadavidli.edu.hk/",
-      "evidence": "",
-      "last_open": "11-02",
-      "opened_at": "2026-10-17",
-      "pages_checked": 2
     },
     {
       "name": "浸大附屬學校王錦輝中小學",
