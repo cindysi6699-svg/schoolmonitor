@@ -41,7 +41,8 @@
   },
   "保良局羅氏基金中學": {
     "status": "auto",
-    "progress": "not_started"
+    "progress": "not_started",
+    "dropped": true
   },
   "聖士提反書院": {
     "status": "open",
