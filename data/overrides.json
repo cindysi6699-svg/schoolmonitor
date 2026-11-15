@@ -34,7 +34,8 @@
   "福建中學": {
     "status": "open",
     "progress": "not_started",
-    "date_start": "2026-11-15"
+    "date_start": "2026-11-15",
+    "date_end": "2026-11-16"
   },
   "保良局羅氏基金中學": {
     "status": "auto",
