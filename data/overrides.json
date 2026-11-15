@@ -84,7 +84,9 @@
   },
   "港大同學會書院": {
     "status": "auto",
-    "progress": "not_started"
+    "progress": "not_started",
+    "date_start": "2026-11-13",
+    "date_end": "2026-12-14"
   },
   "培僑書院": {
     "status": "auto",
