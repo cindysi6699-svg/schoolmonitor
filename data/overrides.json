@@ -15,7 +15,8 @@
   },
   "優才（楊殷有娣）書院": {
     "status": "open",
-    "progress": "not_started"
+    "progress": "not_started",
+    "date_start": "2026-11-15"
   },
   "拔萃女書院": {
     "status": "auto",
