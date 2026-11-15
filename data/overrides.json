@@ -17,7 +17,8 @@
     "status": "open",
     "progress": "not_started",
     "date_start": "2026-11-15",
-    "date_end": "2026-11-17"
+    "date_end": "2026-11-17",
+    "dropped": true
   },
   "拔萃女書院": {
     "status": "auto",
