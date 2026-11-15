@@ -96,6 +96,7 @@
   "聖保祿學校": {
     "status": "open",
     "progress": "not_started",
-    "date_start": "2026-11-15"
+    "date_start": "2026-11-15",
+    "date_end": "2026-12-01"
   }
 }
