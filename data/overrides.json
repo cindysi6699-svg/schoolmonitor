@@ -81,7 +81,8 @@
   "浸大附屬學校王錦輝中小學": {
     "status": "open",
     "progress": "not_started",
-    "date_start": "2026-11-14"
+    "date_start": "2026-11-14",
+    "date_end": "2026-12-09"
   },
   "港大同學會書院": {
     "status": "auto",
