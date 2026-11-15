@@ -10,7 +10,8 @@
     "status": "closed",
     "progress": "not_started",
     "seen_evidence": "網站抓取失敗，請自行查看",
-    "date_openday": "2026-10-10"
+    "date_openday": "2026-10-10",
+    "dropped": true
   },
   "優才（楊殷有娣）書院": {
     "status": "auto",
@@ -59,7 +60,7 @@
   },
   "聖保羅男女中學": {
     "status": "auto",
-    "progress": "not_started",
+    "progress": "applied",
     "date_start": "2026-10-26",
     "date_end": "2026-11-13"
   },
