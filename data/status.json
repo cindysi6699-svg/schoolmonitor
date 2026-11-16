@@ -1,6 +1,6 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-11-15T10:15:30+08:00",
+  "updated_at": "2026-11-16T10:26:47+08:00",
   "counts": {
     "open": 6,
     "closed": 11,
@@ -20,7 +20,7 @@
       "evidence": "2027/28 + Form 1 + application — …cation application for form 1 admission (academic year 2027/28) application form for secondary two to secondary five admission talk and open day sc…",
       "last_open": "09-29",
       "opened_at": "2026-09-23",
-      "pages_checked": 1
+      "pages_checked": 0
     },
     {
       "name": "聖士提反書院",
@@ -35,7 +35,7 @@
       "evidence": "2027-28 + S1 + application — …n why ssc? s1 entry s1 admission talk and campus tour (2027-28) notes to parents application procedure s2-s5 entry notes to parents application pro…",
       "last_open": "10-04",
       "opened_at": "2026-09-16",
-      "pages_checked": 1
+      "pages_checked": 0
     },
     {
       "name": "香港神託會培基書院",
@@ -65,7 +65,7 @@
       "evidence": "2027/28 + 中一入學 + 入學 — …單 中一 中學插班生 國際文憑預科及中四預備班 小學 小一 小學插班生 主頁 入學 本地招生 中學 中一入學 2027/28 年度申請 入學申請須透過本校網上申請系統提交,截止日期後遞交之申請將不受理。 入學申請 約100個中一學額可供申請。 2026年10月26日(上午9時)起接受 網上申請…",
       "last_open": "10-27",
       "opened_at": "2026-10-16",
-      "pages_checked": 1
+      "pages_checked": 0
     },
     {
       "name": "港大同學會書院",
@@ -80,7 +80,7 @@
       "evidence": "2027-28 + S1 + application — …ring students for the next decade what's on? read more 2027-28 s1 application 13 nov 2026 2027-2028 s1 admission info day 07 nov 2026 26-27 sports…",
       "last_open": "11-12",
       "opened_at": "2026-10-10",
-      "pages_checked": 1
+      "pages_checked": 0
     },
     {
       "name": "保良局顏寶鈴書院",
@@ -95,7 +95,7 @@
       "evidence": "2027 – 2028 + Form 1 + admission — …mission f.1 admission application for form 1 admission 2027 – 2028 2027 – 202 8 中一入學申請須知 online admission application 網上入學申請 admission application peri…",
       "last_open": "11-17",
       "opened_at": "2026-08-29",
-      "pages_checked": 2
+      "pages_checked": 0
     },
     {
       "name": "滙基書院（東九龍）",
@@ -140,7 +140,7 @@
       "evidence": "",
       "last_open": "09-22",
       "opened_at": null,
-      "pages_checked": 6
+      "pages_checked": 0
     },
     {
       "name": "拔萃女書院",
@@ -170,7 +170,7 @@
       "evidence": "",
       "last_open": "09-29",
       "opened_at": "2026-10-13",
-      "pages_checked": 1
+      "pages_checked": 0
     },
     {
       "name": "中華基金中學",
@@ -200,7 +200,7 @@
       "evidence": "",
       "last_open": "10-11",
       "opened_at": "2026-10-17",
-      "pages_checked": 6
+      "pages_checked": 0
     },
     {
       "name": "香港青年協會李兆基書院",
@@ -260,7 +260,7 @@
       "evidence": "",
       "last_open": "11-08",
       "opened_at": null,
-      "pages_checked": 1
+      "pages_checked": 0
     },
     {
       "name": "培僑書院",
@@ -290,7 +290,7 @@
       "evidence": "",
       "last_open": "待確認",
       "opened_at": null,
-      "pages_checked": 1
+      "pages_checked": 0
     }
   ]
 }
