@@ -77,7 +77,8 @@
   },
   "基督教崇真中學": {
     "status": "open",
-    "progress": "not_started"
+    "progress": "not_started",
+    "date_end": "2027-01-08"
   },
   "香港管理專業協會李國寶中學": {
     "status": "auto",
