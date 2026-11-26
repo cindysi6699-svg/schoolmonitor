@@ -1,6 +1,6 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-11-25T13:07:56+08:00",
+  "updated_at": "2026-11-26T12:33:26+08:00",
   "counts": {
     "open": 7,
     "closed": 10,
@@ -200,7 +200,7 @@
       "evidence": "",
       "last_open": "10-06",
       "opened_at": null,
-      "pages_checked": 4
+      "pages_checked": 0
     },
     {
       "name": "協恩中學",
@@ -230,7 +230,7 @@
       "evidence": "",
       "last_open": "10-31",
       "opened_at": null,
-      "pages_checked": 2
+      "pages_checked": 0
     },
     {
       "name": "基督教崇真中學",
@@ -245,7 +245,7 @@
       "evidence": "",
       "last_open": "11-01",
       "opened_at": null,
-      "pages_checked": 5
+      "pages_checked": 0
     },
     {
       "name": "浸大附屬學校王錦輝中小學",
