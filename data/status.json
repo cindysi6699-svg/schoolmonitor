@@ -1,9 +1,9 @@
 {
   "target_label": "2027/28",
-  "updated_at": "2026-11-27T12:37:21+08:00",
+  "updated_at": "2026-11-28T12:22:44+08:00",
   "counts": {
-    "open": 7,
-    "closed": 10,
+    "open": 8,
+    "closed": 9,
     "manual": 2
   },
   "schools": [
@@ -68,6 +68,21 @@
       "pages_checked": 0
     },
     {
+      "name": "香港管理專業協會李國寶中學",
+      "district": "油尖旺",
+      "band": "1B",
+      "gender": "男女",
+      "fee": "$39,780",
+      "curriculum": "DSE",
+      "status": "open",
+      "source": "https://www.hkmadavidli.edu.hk/admission/s1_admission/",
+      "home": "https://www.hkmadavidli.edu.hk/",
+      "evidence": "2027/28 + S1 + admission — …ses english as the medium of instruction. s1 admission 2027/28 application periods & interview arrangement (stage 1) applications should be submitt…",
+      "last_open": "11-02",
+      "opened_at": "2026-11-28",
+      "pages_checked": 2
+    },
+    {
       "name": "港大同學會書院",
       "district": "南區",
       "band": "1A",
@@ -107,7 +122,7 @@
       "status": "open",
       "source": "https://application.puikiucollege.edu.hk/event/all?cat_id=19&lang=zh",
       "home": "https://www.puikiucollege.edu.hk/",
-      "evidence": "2027-2028 + 中一 + 申請 — …| eng 繁體 學校網頁 招生簡介會 入學申請 查詢申請狀態或 評估安排 2027-2028 小一入學申請 2027-2028 中一入學申請 2026-2027 插班生入學申請 入學申請 2027-2028 中一入學申請 2027-2028 小一入學申請 回到頁頂 培僑書院入學申請系統 © 20…",
+      "evidence": "2027-2028 + 中一 + 申請 — …| eng 繁體 學校網頁 招生簡介會 入學申請 查詢申請狀態或 評估安排 2027-2028 小一入學申請 2027-2028 中一入學申請 2026-2027 插班生入學申請 入學申請 2027-2028 中一入學申請 2027-2028 小一入學申請 2026-2027 插班生入學申請 回到…",
       "last_open": "11-25",
       "opened_at": "2026-11-27",
       "pages_checked": 1
@@ -246,21 +261,6 @@
       "last_open": "11-01",
       "opened_at": null,
       "pages_checked": 0
-    },
-    {
-      "name": "香港管理專業協會李國寶中學",
-      "district": "油尖旺",
-      "band": "1B",
-      "gender": "男女",
-      "fee": "$39,780",
-      "curriculum": "DSE",
-      "status": "closed",
-      "source": "https://www.hkmadavidli.edu.hk/",
-      "home": "https://www.hkmadavidli.edu.hk/",
-      "evidence": "",
-      "last_open": "11-02",
-      "opened_at": "2026-11-19",
-      "pages_checked": 2
     },
     {
       "name": "浸大附屬學校王錦輝中小學",
